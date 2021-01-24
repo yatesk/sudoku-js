@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
+import Grid from "./components/Grid.js"
+
 import "./index.css";
 
 var destination = document.getElementById("container");
@@ -11,7 +13,7 @@ function App() {
     return (
         <div>
             <h1>Sudoku</h1>
-            {/* <TicTacToe key={gameId} resetGame={() => setGameId(gameId + 1)}/> */}
+            <Grid key={gameId} resetGame={() => setGameId(gameId + 1)}/>
         </div>
     );
 }
