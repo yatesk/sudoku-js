@@ -28,19 +28,26 @@
   }
   
   .cell {
-    font-size: 40px;
     display: grid;
     grid-template-rows: 25px 25px 25px;
     grid-template-columns: 25px 25px 25px;
     width: 75px;
     height: 75px;
-
     outline:1px solid white;
+  }
+
+  .cellNumber {
+    font-size: 40px;
+    width: 75px;
+    height: 75px;
+    outline:1px solid white;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 75px; 
   }
 
   .candidateCell {
     font-size: 18px;
-    display: inline-block;
     width: 25px;
     height: 25px;
     background: grey;
@@ -56,6 +63,9 @@
     display: grid;
     grid-template-rows: 75px 75px 75px;
     grid-template-columns: 75px 75px 75px;
+    outline: 2px solid black;
+  }
 
-    outline: 5px solid black;
+  .subGrid + .subGrid {
+    box-shadow: none;
   }

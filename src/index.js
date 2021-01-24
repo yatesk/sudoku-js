@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
-import Grid from "./components/Grid.js"
+import Sudoku from "./components/Sudoku.js"
 
 import "./index.css";
 
@@ -12,8 +12,7 @@ function App() {
 
     return (
         <div>
-            <h1>Sudoku</h1>
-            <Grid key={gameId} resetGame={() => setGameId(gameId + 1)}/>
+            <Sudoku/>
         </div>
     );
 }
