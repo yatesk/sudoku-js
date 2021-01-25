@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import "../index.css";
 
@@ -37,7 +37,7 @@ function HasCandidates() {
 function HasNumber(id, value, numbers, setNumbers) {
     function onClick(e) {
         const newNumbers = [...numbers];
-        newNumbers[id] = null;
+        newNumbers[id] = 0;
 
         console.log(numbers);
         console.log(newNumbers);
@@ -60,7 +60,7 @@ function Cell({id, value, numbers, setNumbers}) {
 
     return (
         <>
-            {value !== null ? HasNumber(id, value, numbers, setNumbers) : HasCandidates() }
+            {value !== 0 ? HasNumber(id, value, numbers, setNumbers) : HasCandidates() }
         </>
     );
 }

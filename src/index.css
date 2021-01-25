@@ -20,8 +20,8 @@
   
   .gameBoardGrid {
     display: grid;
-    grid-template-rows: 225px 225px 225px;
-    grid-template-columns: 225px 225px 225px;
+    grid-template-rows: 75px 75px 75px 75px 75px 75px 75px 75px 75px;
+    grid-template-columns: 675px;
     align-content: center;
     justify-content: center;
     background-color: darkgray;
@@ -61,11 +61,17 @@
 
   .subGrid {
     display: grid;
-    grid-template-rows: 75px 75px 75px;
-    grid-template-columns: 75px 75px 75px;
+    /* grid-template-rows: 75px 75px 75px; */
+    grid-template-columns: 75px 75px 75px 75px 75px 75px 75px 75px 75px;
     outline: 2px solid black;
   }
 
   .subGrid + .subGrid {
     box-shadow: none;
+  }
+
+  .gridDisplay {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
   }
