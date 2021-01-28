@@ -21,7 +21,7 @@
   .gameBoardGrid {
     display: grid;
     grid-template-rows: 75px 75px 75px 75px 75px 75px 75px 75px 75px;
-    grid-template-columns: 675px;
+    grid-template-columns: 75px 75px 75px 75px 75px 75px 75px 75px 75px;
     align-content: center;
     justify-content: center;
     background-color: darkgray;
@@ -57,17 +57,6 @@
   /* still takes up space */
   .hidden { 
     visibility: hidden; 
-  }
-
-  .subGrid {
-    display: grid;
-    /* grid-template-rows: 75px 75px 75px; */
-    grid-template-columns: 75px 75px 75px 75px 75px 75px 75px 75px 75px;
-    outline: 2px solid black;
-  }
-
-  .subGrid + .subGrid {
-    box-shadow: none;
   }
 
   .gridDisplay {

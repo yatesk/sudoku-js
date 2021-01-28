@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import "../index.css";
 
-function HasCandidates() {
+function HasCandidates(gridID, updatePuzzle) {
     const [candidates, setCandidates] = useState(Array(9).fill(true));
 
     function updateCandidates(cell) {
@@ -14,11 +14,17 @@ function HasCandidates() {
     }
 
     function onClick(e) {
+        console.log(typeof(updatePuzzle));
+        updatePuzzle(gridID, e.target.id);
+    }
+
+    function onContextMenu(e) {
+        e.preventDefault();
         updateCandidates(parseInt(e.target.id));
     }
 
     return (
-        <div className='cell' onClick={onClick}>
+        <div className='cell' onClick={onClick} onContextMenu={onContextMenu}>
             { candidates[0] ? <div id="1" className='candidateCell'>1</div> : <div id="1" className='candidateCell'/> }
             { candidates[1] ? <div id="2" className='candidateCell'>2</div> : <div id="2" className='candidateCell'/> }
             { candidates[2] ? <div id="3" className='candidateCell'>3</div> : <div id="3" className='candidateCell'/> }
@@ -34,33 +40,31 @@ function HasCandidates() {
     );
 }
 
-function HasNumber(id, value, numbers, setNumbers) {
+function HasNumber(gridID, value, numbers, setNumbers) {
     function onClick(e) {
         const newNumbers = [...numbers];
-        newNumbers[id] = 0;
-
-        console.log(numbers);
-        console.log(newNumbers);
+        newNumbers[gridID] = 0;
 
         setNumbers(newNumbers);
 
         console.log("number clicked");
     }   
 
+    function onContextMenu(e) {
+        e.preventDefault();
+    }
+
     return (
-    <div className='cellNumber' onClick={onClick}>
+    <div className='cellNumber' onClick={onClick} onContextMenu={onContextMenu}>
         {value}
     </div> 
     );
 }
 
-
-
-function Cell({id, value, numbers, setNumbers}) {
-
+function Cell({gridID, value, numbers, setNumbers, updatePuzzle}) {
     return (
         <>
-            {value !== 0 ? HasNumber(id, value, numbers, setNumbers) : HasCandidates() }
+            {value !== 0 ? HasNumber(gridID, value, numbers, setNumbers, updatePuzzle) : HasCandidates(gridID, updatePuzzle) }
         </>
     );
 }

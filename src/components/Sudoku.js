@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import Grid from "./Grid.js"
-
 import "../index.css";
 
 function CheckBoxes() {
@@ -81,25 +80,22 @@ function Sudoku() {
                         0, 0, 0, 0, 0, 0, 0, 0, 0,
                         0, 6, 0, 4, 0, 0, 0, 0, 0,
                         9, 0, 2, 0, 6, 0, 1, 0, 0,
-                        0, 0, 0, 0, 0, 3, 0, 7, 0]
+                        0, 0, 0, 0, 0, 3, 0, 7, 0];
+
+    const [puzzle, setPuzzle] = useState(testPuzzle);
 
     return (
         <div>
             <h1>Sudoku</h1>
             <div className="gridDisplay">
-            
-                <Grid key={gameId} resetGame={() => setGameId(gameId + 1)} puzzle={testPuzzle}/>
+                <Grid key={gameId} resetGame={() => setGameId(gameId + 1)} puzzle={puzzle} setPuzzle={setPuzzle}/>
                 <div>
                     <ComboBoxes />
                     <Buttons />
                 </div>
-                
-
                 <CheckBoxes />
             </div>
         </div>
-        
-            
     );
 }
 
