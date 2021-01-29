@@ -14,7 +14,6 @@ function HasCandidates(gridID, updatePuzzle) {
     }
 
     function onClick(e) {
-        console.log(typeof(updatePuzzle));
         updatePuzzle(gridID, e.target.id);
     }
 
@@ -23,8 +22,13 @@ function HasCandidates(gridID, updatePuzzle) {
         updateCandidates(parseInt(e.target.id));
     }
 
+    function mouseDownHandler(e) {
+        // prevents scroll circle
+        e.preventDefault();
+    }
+
     return (
-        <div className='cell' onClick={onClick} onContextMenu={onContextMenu}>
+        <div className='cell' onClick={onClick} onContextMenu={onContextMenu} onMouseDown={mouseDownHandler}>
             { candidates[0] ? <div id="1" className='candidateCell'>1</div> : <div id="1" className='candidateCell'/> }
             { candidates[1] ? <div id="2" className='candidateCell'>2</div> : <div id="2" className='candidateCell'/> }
             { candidates[2] ? <div id="3" className='candidateCell'>3</div> : <div id="3" className='candidateCell'/> }
@@ -40,31 +44,33 @@ function HasCandidates(gridID, updatePuzzle) {
     );
 }
 
-function HasNumber(gridID, value, numbers, setNumbers) {
-    function onClick(e) {
-        const newNumbers = [...numbers];
-        newNumbers[gridID] = 0;
-
-        setNumbers(newNumbers);
-
-        console.log("number clicked");
-    }   
+function HasNumber(gridID, value, updatePuzzle) {
 
     function onContextMenu(e) {
         e.preventDefault();
     }
 
+    function mouseDownHandler(e) {
+        // prevents scroll circle
+        e.preventDefault();
+
+        // if middle mouse button is clicked
+        if(e.button === 1) {
+            updatePuzzle(gridID, 0);
+        }
+    }
+
     return (
-    <div className='cellNumber' onClick={onClick} onContextMenu={onContextMenu}>
-        {value}
-    </div> 
+        <div className='cellNumber' onContextMenu={onContextMenu} onMouseDown={mouseDownHandler}>
+            {value}
+        </div> 
     );
 }
 
-function Cell({gridID, value, numbers, setNumbers, updatePuzzle}) {
+function Cell({gridID, value, updatePuzzle}) {
     return (
         <>
-            {value !== 0 ? HasNumber(gridID, value, numbers, setNumbers, updatePuzzle) : HasCandidates(gridID, updatePuzzle) }
+            {value !== 0 ? HasNumber(gridID, value, updatePuzzle) : HasCandidates(gridID, updatePuzzle) }
         </>
     );
 }
