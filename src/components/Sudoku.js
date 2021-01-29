@@ -25,7 +25,7 @@ function CheckBoxes() {
 
 function ComboBoxes() {
     return (
-        <div className='gridDisplay'>
+        <div className='gridDisplay select'>
             <label htmlFor="puzzleSource">Puzzle Source:</label>
             <select id="puzzleSource" name="puzzleSource">
                 <option value="nyTimes">NY Times</option>
@@ -72,7 +72,7 @@ function Buttons() {
 function Sudoku() {
     const [gameId, setGameId] = useState(1);
 
-    const testPuzzle = [0, 0, 1, 0, 0, 0, 0, 2, 6,
+    const starterGrid = [0, 0, 1, 0, 0, 0, 0, 2, 6,
                         7, 2, 0, 6, 9, 0, 4, 1, 0,
                         0, 0, 0, 0, 4, 0, 0, 0, 0,
                         4, 0, 0, 7, 5, 0, 2, 0, 0,
@@ -82,13 +82,13 @@ function Sudoku() {
                         9, 0, 2, 0, 6, 0, 1, 0, 0,
                         0, 0, 0, 0, 0, 3, 0, 7, 0];
 
-    const [puzzle, setPuzzle] = useState(testPuzzle);
+    const [grid, setGrid] = useState(starterGrid);
 
     return (
         <div>
             <h1>Sudoku</h1>
             <div className="gridDisplay">
-                <Grid key={gameId} resetGame={() => setGameId(gameId + 1)} puzzle={puzzle} setPuzzle={setPuzzle}/>
+                <Grid key={gameId} resetGame={() => setGameId(gameId + 1)} grid={grid} setGrid={setGrid} starterGrid={starterGrid}/>
                 <div>
                     <ComboBoxes />
                     <Buttons />

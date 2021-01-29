@@ -3,110 +3,110 @@ import React from "react";
 import Cell from "./Cell.js"
 import "../index.css";
 
-function Grid({resetGame, puzzle, setPuzzle}) {
+function Grid({resetGame, grid, setGrid, starterGrid}) {
 
     function onClick(e) {
         // console.log('board clicked');
     }
 
-    function updatePuzzle(gridID, value) {
-        const newPuzzle = [...puzzle];
-        newPuzzle[gridID] = value;
+    function updateGrid(gridID, value) {
+        const newGrid = [...grid];
+        newGrid[gridID] = value;
 
-        setPuzzle(newPuzzle);
+        setGrid(newGrid);
     }
 
     return (
         <div className='gameBoardGrid' onClick={onClick}>
-            <Cell gridID={0} value={puzzle[0]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={1} value={puzzle[1]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={2} value={puzzle[2]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={3} value={puzzle[3]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={4} value={puzzle[4]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={5} value={puzzle[5]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={6} value={puzzle[6]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={7} value={puzzle[7]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={8} value={puzzle[8]} updatePuzzle={updatePuzzle}/>
+            <Cell gridID={0} value={grid[0]} updateGrid={updateGrid} revealedCell={starterGrid[0] !== 0}/>
+            <Cell gridID={1} value={grid[1]} updateGrid={updateGrid} revealedCell={starterGrid[1] !== 0}/>
+            <Cell gridID={2} value={grid[2]} updateGrid={updateGrid} revealedCell={starterGrid[2] !== 0}/>
+            <Cell gridID={3} value={grid[3]} updateGrid={updateGrid} revealedCell={starterGrid[3] !== 0}/>
+            <Cell gridID={4} value={grid[4]} updateGrid={updateGrid} revealedCell={starterGrid[4] !== 0}/>
+            <Cell gridID={5} value={grid[5]} updateGrid={updateGrid} revealedCell={starterGrid[5] !== 0}/>
+            <Cell gridID={6} value={grid[6]} updateGrid={updateGrid} revealedCell={starterGrid[6] !== 0}/>
+            <Cell gridID={7} value={grid[7]} updateGrid={updateGrid} revealedCell={starterGrid[7] !== 0}/>
+            <Cell gridID={8} value={grid[8]} updateGrid={updateGrid} revealedCell={starterGrid[8] !== 0}/>
 
-            <Cell gridID={9} value={puzzle[9]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={10} value={puzzle[10]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={11} value={puzzle[11]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={12} value={puzzle[12]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={13} value={puzzle[13]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={14} value={puzzle[14]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={15} value={puzzle[15]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={16} value={puzzle[16]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={17} value={puzzle[17]} updatePuzzle={updatePuzzle}/>
+            <Cell gridID={9} value={grid[9]} updateGrid={updateGrid} revealedCell={starterGrid[9] !== 0}/>
+            <Cell gridID={10} value={grid[10]} updateGrid={updateGrid} revealedCell={starterGrid[10] !== 0}/>
+            <Cell gridID={11} value={grid[11]} updateGrid={updateGrid} revealedCell={starterGrid[11] !== 0}/>
+            <Cell gridID={12} value={grid[12]} updateGrid={updateGrid} revealedCell={starterGrid[12] !== 0}/>
+            <Cell gridID={13} value={grid[13]} updateGrid={updateGrid} revealedCell={starterGrid[13] !== 0}/>
+            <Cell gridID={14} value={grid[14]} updateGrid={updateGrid} revealedCell={starterGrid[14] !== 0}/>
+            <Cell gridID={15} value={grid[15]} updateGrid={updateGrid} revealedCell={starterGrid[15] !== 0}/>
+            <Cell gridID={16} value={grid[16]} updateGrid={updateGrid} revealedCell={starterGrid[16] !== 0}/>
+            <Cell gridID={17} value={grid[17]} updateGrid={updateGrid} revealedCell={starterGrid[17] !== 0}/>
 
-            <Cell gridID={18} value={puzzle[18]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={19} value={puzzle[19]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={20} value={puzzle[20]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={21} value={puzzle[21]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={22} value={puzzle[22]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={23} value={puzzle[23]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={24} value={puzzle[24]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={25} value={puzzle[25]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={26} value={puzzle[26]} updatePuzzle={updatePuzzle}/>
+            <Cell gridID={18} value={grid[18]} updateGrid={updateGrid} revealedCell={starterGrid[18] !== 0}/>
+            <Cell gridID={19} value={grid[19]} updateGrid={updateGrid} revealedCell={starterGrid[19] !== 0}/>
+            <Cell gridID={20} value={grid[20]} updateGrid={updateGrid} revealedCell={starterGrid[20] !== 0}/>
+            <Cell gridID={21} value={grid[21]} updateGrid={updateGrid} revealedCell={starterGrid[21] !== 0}/>
+            <Cell gridID={22} value={grid[22]} updateGrid={updateGrid} revealedCell={starterGrid[22] !== 0}/>
+            <Cell gridID={23} value={grid[23]} updateGrid={updateGrid} revealedCell={starterGrid[23] !== 0}/>
+            <Cell gridID={24} value={grid[24]} updateGrid={updateGrid} revealedCell={starterGrid[24] !== 0}/>
+            <Cell gridID={25} value={grid[25]} updateGrid={updateGrid} revealedCell={starterGrid[25] !== 0}/>
+            <Cell gridID={26} value={grid[26]} updateGrid={updateGrid} revealedCell={starterGrid[26] !== 0}/>
 
-            <Cell gridID={27} value={puzzle[27]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={28} value={puzzle[28]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={29} value={puzzle[29]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={30} value={puzzle[30]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={31} value={puzzle[31]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={32} value={puzzle[32]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={33} value={puzzle[33]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={34} value={puzzle[34]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={35} value={puzzle[35]} updatePuzzle={updatePuzzle}/>
+            <Cell gridID={27} value={grid[27]} updateGrid={updateGrid} revealedCell={starterGrid[27] !== 0}/>
+            <Cell gridID={28} value={grid[28]} updateGrid={updateGrid} revealedCell={starterGrid[28] !== 0}/>
+            <Cell gridID={29} value={grid[29]} updateGrid={updateGrid} revealedCell={starterGrid[29] !== 0}/>
+            <Cell gridID={30} value={grid[30]} updateGrid={updateGrid} revealedCell={starterGrid[30] !== 0}/>
+            <Cell gridID={31} value={grid[31]} updateGrid={updateGrid} revealedCell={starterGrid[31] !== 0}/>
+            <Cell gridID={32} value={grid[32]} updateGrid={updateGrid} revealedCell={starterGrid[32] !== 0}/>
+            <Cell gridID={33} value={grid[33]} updateGrid={updateGrid} revealedCell={starterGrid[33] !== 0}/>
+            <Cell gridID={34} value={grid[34]} updateGrid={updateGrid} revealedCell={starterGrid[34] !== 0}/>
+            <Cell gridID={35} value={grid[35]} updateGrid={updateGrid} revealedCell={starterGrid[35] !== 0}/>
 
-            <Cell gridID={36} value={puzzle[36]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={37} value={puzzle[37]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={38} value={puzzle[38]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={39} value={puzzle[39]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={40} value={puzzle[40]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={41} value={puzzle[41]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={42} value={puzzle[42]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={43} value={puzzle[43]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={44} value={puzzle[44]} updatePuzzle={updatePuzzle}/>
+            <Cell gridID={36} value={grid[36]} updateGrid={updateGrid} revealedCell={starterGrid[36] !== 0}/>
+            <Cell gridID={37} value={grid[37]} updateGrid={updateGrid} revealedCell={starterGrid[37] !== 0}/>
+            <Cell gridID={38} value={grid[38]} updateGrid={updateGrid} revealedCell={starterGrid[38] !== 0}/>
+            <Cell gridID={39} value={grid[39]} updateGrid={updateGrid} revealedCell={starterGrid[39] !== 0}/>
+            <Cell gridID={40} value={grid[40]} updateGrid={updateGrid} revealedCell={starterGrid[40] !== 0}/>
+            <Cell gridID={41} value={grid[41]} updateGrid={updateGrid} revealedCell={starterGrid[41] !== 0}/>
+            <Cell gridID={42} value={grid[42]} updateGrid={updateGrid} revealedCell={starterGrid[42] !== 0}/>
+            <Cell gridID={43} value={grid[43]} updateGrid={updateGrid} revealedCell={starterGrid[43] !== 0}/>
+            <Cell gridID={44} value={grid[44]} updateGrid={updateGrid} revealedCell={starterGrid[44] !== 0}/>
 
-            <Cell gridID={45} value={puzzle[45]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={46} value={puzzle[46]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={47} value={puzzle[47]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={48} value={puzzle[48]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={49} value={puzzle[49]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={50} value={puzzle[50]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={51} value={puzzle[51]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={52} value={puzzle[52]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={53} value={puzzle[53]} updatePuzzle={updatePuzzle}/>
+            <Cell gridID={45} value={grid[45]} updateGrid={updateGrid} revealedCell={starterGrid[45] !== 0}/>
+            <Cell gridID={46} value={grid[46]} updateGrid={updateGrid} revealedCell={starterGrid[46] !== 0}/>
+            <Cell gridID={47} value={grid[47]} updateGrid={updateGrid} revealedCell={starterGrid[47] !== 0}/>
+            <Cell gridID={48} value={grid[48]} updateGrid={updateGrid} revealedCell={starterGrid[48] !== 0}/>
+            <Cell gridID={49} value={grid[49]} updateGrid={updateGrid} revealedCell={starterGrid[49] !== 0}/>
+            <Cell gridID={50} value={grid[50]} updateGrid={updateGrid} revealedCell={starterGrid[50] !== 0}/>
+            <Cell gridID={51} value={grid[51]} updateGrid={updateGrid} revealedCell={starterGrid[51] !== 0}/>
+            <Cell gridID={52} value={grid[52]} updateGrid={updateGrid} revealedCell={starterGrid[52] !== 0}/>
+            <Cell gridID={53} value={grid[53]} updateGrid={updateGrid} revealedCell={starterGrid[53] !== 0}/>
 
-            <Cell gridID={54} value={puzzle[54]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={55} value={puzzle[55]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={56} value={puzzle[56]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={57} value={puzzle[57]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={58} value={puzzle[58]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={59} value={puzzle[59]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={60} value={puzzle[69]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={61} value={puzzle[61]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={62} value={puzzle[62]} updatePuzzle={updatePuzzle}/>
+            <Cell gridID={54} value={grid[54]} updateGrid={updateGrid} revealedCell={starterGrid[54] !== 0}/>
+            <Cell gridID={55} value={grid[55]} updateGrid={updateGrid} revealedCell={starterGrid[55] !== 0}/>
+            <Cell gridID={56} value={grid[56]} updateGrid={updateGrid} revealedCell={starterGrid[56] !== 0}/>
+            <Cell gridID={57} value={grid[57]} updateGrid={updateGrid} revealedCell={starterGrid[57] !== 0}/>
+            <Cell gridID={58} value={grid[58]} updateGrid={updateGrid} revealedCell={starterGrid[58] !== 0}/>
+            <Cell gridID={59} value={grid[59]} updateGrid={updateGrid} revealedCell={starterGrid[59] !== 0}/>
+            <Cell gridID={60} value={grid[69]} updateGrid={updateGrid} revealedCell={starterGrid[69] !== 0}/>
+            <Cell gridID={61} value={grid[61]} updateGrid={updateGrid} revealedCell={starterGrid[61] !== 0}/>
+            <Cell gridID={62} value={grid[62]} updateGrid={updateGrid} revealedCell={starterGrid[62] !== 0}/>
 
-            <Cell gridID={63} value={puzzle[63]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={64} value={puzzle[64]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={65} value={puzzle[65]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={66} value={puzzle[66]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={67} value={puzzle[67]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={68} value={puzzle[68]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={69} value={puzzle[69]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={70} value={puzzle[70]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={71} value={puzzle[71]} updatePuzzle={updatePuzzle}/>
+            <Cell gridID={63} value={grid[63]} updateGrid={updateGrid} revealedCell={starterGrid[63] !== 0}/>
+            <Cell gridID={64} value={grid[64]} updateGrid={updateGrid} revealedCell={starterGrid[64] !== 0}/>
+            <Cell gridID={65} value={grid[65]} updateGrid={updateGrid} revealedCell={starterGrid[65] !== 0}/>
+            <Cell gridID={66} value={grid[66]} updateGrid={updateGrid} revealedCell={starterGrid[66] !== 0}/>
+            <Cell gridID={67} value={grid[67]} updateGrid={updateGrid} revealedCell={starterGrid[67] !== 0}/>
+            <Cell gridID={68} value={grid[68]} updateGrid={updateGrid} revealedCell={starterGrid[68] !== 0}/>
+            <Cell gridID={69} value={grid[69]} updateGrid={updateGrid} revealedCell={starterGrid[69] !== 0}/>
+            <Cell gridID={70} value={grid[70]} updateGrid={updateGrid} revealedCell={starterGrid[70] !== 0}/>
+            <Cell gridID={71} value={grid[71]} updateGrid={updateGrid} revealedCell={starterGrid[71] !== 0}/>
 
-            <Cell gridID={72} value={puzzle[72]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={73} value={puzzle[73]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={74} value={puzzle[74]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={75} value={puzzle[75]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={76} value={puzzle[76]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={77} value={puzzle[77]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={78} value={puzzle[78]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={79} value={puzzle[79]} updatePuzzle={updatePuzzle}/>
-            <Cell gridID={80} value={puzzle[80]} updatePuzzle={updatePuzzle}/>
+            <Cell gridID={72} value={grid[72]} updateGrid={updateGrid} revealedCell={starterGrid[72] !== 0}/>
+            <Cell gridID={73} value={grid[73]} updateGrid={updateGrid} revealedCell={starterGrid[73] !== 0}/>
+            <Cell gridID={74} value={grid[74]} updateGrid={updateGrid} revealedCell={starterGrid[74] !== 0}/>
+            <Cell gridID={75} value={grid[75]} updateGrid={updateGrid} revealedCell={starterGrid[75] !== 0}/>
+            <Cell gridID={76} value={grid[76]} updateGrid={updateGrid} revealedCell={starterGrid[76] !== 0}/>
+            <Cell gridID={77} value={grid[77]} updateGrid={updateGrid} revealedCell={starterGrid[77] !== 0}/>
+            <Cell gridID={78} value={grid[78]} updateGrid={updateGrid} revealedCell={starterGrid[78] !== 0}/>
+            <Cell gridID={79} value={grid[79]} updateGrid={updateGrid} revealedCell={starterGrid[79] !== 0}/>
+            <Cell gridID={80} value={grid[80]} updateGrid={updateGrid} revealedCell={starterGrid[80] !== 0}/>
         </div> 
     );
 }

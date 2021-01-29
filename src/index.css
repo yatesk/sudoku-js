@@ -1,6 +1,6 @@
 
   html {
-    font-size: 30px;
+    font-size: 20px;
     background-color: rgb(167, 167, 167);
 
     cursor: pointer;
@@ -10,20 +10,13 @@
       font-size: 48px;
       text-align: center;
   }
-
-  .mainGrid {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    justify-content: center;
-  
-  }
   
   .gameBoardGrid {
     display: grid;
     grid-template-rows: 75px 75px 75px 75px 75px 75px 75px 75px 75px;
     grid-template-columns: 75px 75px 75px 75px 75px 75px 75px 75px 75px;
-    align-content: center;
-    justify-content: center;
+    /* align-content: center; */
+    margin: 40px;
     background-color: darkgray;
   }
   
@@ -37,20 +30,32 @@
   }
 
   .cellNumber {
-    font-size: 40px;
+    font-size: 50px;
     width: 75px;
     height: 75px;
     outline:1px solid white;
     text-align: center;
     vertical-align: middle;
     line-height: 75px; 
+    background-color: lightgray;
+  }
+
+  .cellNumberRevealed {
+    font-size: 50px;
+    width: 75px;
+    height: 75px;
+    outline:1px solid white;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 75px; 
+    background-color: gray;
   }
 
   .candidateCell {
     font-size: 18px;
     width: 25px;
     height: 25px;
-    background: grey;
+    background: lightgray;
     text-align: center;
   }
 
@@ -61,6 +66,10 @@
 
   .gridDisplay {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: min-content auto;
     grid-template-rows: auto auto;
+  }
+
+  .select  {
+    width:200px;
   }

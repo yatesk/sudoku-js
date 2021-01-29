@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import "../index.css";
 
-function HasCandidates(gridID, updatePuzzle) {
+function HasCandidates(gridID, updateGrid) {
     const [candidates, setCandidates] = useState(Array(9).fill(true));
 
     function updateCandidates(cell) {
@@ -14,7 +14,7 @@ function HasCandidates(gridID, updatePuzzle) {
     }
 
     function onClick(e) {
-        updatePuzzle(gridID, e.target.id);
+        updateGrid(gridID, e.target.id);
     }
 
     function onContextMenu(e) {
@@ -44,8 +44,7 @@ function HasCandidates(gridID, updatePuzzle) {
     );
 }
 
-function HasNumber(gridID, value, updatePuzzle) {
-
+function HasNumber(gridID, value, updateGrid, revealedCell) {
     function onContextMenu(e) {
         e.preventDefault();
     }
@@ -55,22 +54,22 @@ function HasNumber(gridID, value, updatePuzzle) {
         e.preventDefault();
 
         // if middle mouse button is clicked
-        if(e.button === 1) {
-            updatePuzzle(gridID, 0);
+        if(revealedCell === false && e.button === 1) {
+            updateGrid(gridID, 0);
         }
     }
 
     return (
-        <div className='cellNumber' onContextMenu={onContextMenu} onMouseDown={mouseDownHandler}>
+        <div className={revealedCell ? 'cellNumberRevealed' : 'cellNumber'} onContextMenu={onContextMenu} onMouseDown={mouseDownHandler}>
             {value}
         </div> 
     );
 }
 
-function Cell({gridID, value, updatePuzzle}) {
+function Cell({gridID, value, updateGrid, revealedCell}) {
     return (
         <>
-            {value !== 0 ? HasNumber(gridID, value, updatePuzzle) : HasCandidates(gridID, updatePuzzle) }
+            {value !== 0 ? HasNumber(gridID, value, updateGrid, revealedCell) : HasCandidates(gridID, updateGrid) }
         </>
     );
 }
