@@ -40,6 +40,11 @@
     background-color: lightgray;
   }
 
+  .subGridOutline {
+    outline:1px solid Black;
+    background-color: red;
+  }
+
   .cellNumberRevealed {
     font-size: 50px;
     width: 75px;
@@ -72,4 +77,16 @@
 
   .select  {
     width:200px;
+  }
+
+  .invalidCellNumber {
+    position:absolute;
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    background-color: red;
+
+    /* Moves the red dot into the lower right corner */
+    margin-top: -26px;
+    margin-left: 48px;
   }

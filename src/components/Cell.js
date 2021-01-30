@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "../index.css";
 
 function HasCandidates(gridID, updateGrid) {
-    const [candidates, setCandidates] = useState(Array(9).fill(true));
+    const [candidates, setCandidates] = useState(Array(9).fill(false));
 
     function updateCandidates(cell) {
         const tempCandidates = candidates.slice();
@@ -14,7 +14,7 @@ function HasCandidates(gridID, updateGrid) {
     }
 
     function onClick(e) {
-        updateGrid(gridID, e.target.id);
+        updateGrid(gridID, parseInt(e.target.id));
     }
 
     function onContextMenu(e) {
@@ -44,7 +44,7 @@ function HasCandidates(gridID, updateGrid) {
     );
 }
 
-function HasNumber(gridID, value, updateGrid, revealedCell) {
+function HasNumber(gridID, value, updateGrid, revealedCell, invalidCellNumber) {
     function onContextMenu(e) {
         e.preventDefault();
     }
@@ -60,16 +60,23 @@ function HasNumber(gridID, value, updateGrid, revealedCell) {
     }
 
     return (
-        <div className={revealedCell ? 'cellNumberRevealed' : 'cellNumber'} onContextMenu={onContextMenu} onMouseDown={mouseDownHandler}>
-            {value}
-        </div> 
+        <div>
+            <div className={revealedCell ? 'cellNumberRevealed' : 'cellNumber'} onContextMenu={onContextMenu} onMouseDown={mouseDownHandler}>
+                {value}
+                <div className={invalidCellNumber ? 'invalidCellNumber' : ''}></div>
+            </div>
+        </div>
     );
 }
 
-function Cell({gridID, value, updateGrid, revealedCell}) {
+function Cell({gridID, value, updateGrid, revealedCell, invalidCellNumber}) {
+    // useEffect(() => {
+    //     console.log("test");
+    // }, [value]);
+
     return (
         <>
-            {value !== 0 ? HasNumber(gridID, value, updateGrid, revealedCell) : HasCandidates(gridID, updateGrid) }
+            {value !== 0 ? HasNumber(gridID, value, updateGrid, revealedCell, invalidCellNumber) : HasCandidates(gridID, updateGrid) }
         </>
     );
 }

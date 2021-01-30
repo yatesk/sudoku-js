@@ -18,7 +18,6 @@ function CheckBoxes() {
                 <input type="checkbox" />
                 Show Candidates
             </label>
-            
         </div>
     );
 }
@@ -67,7 +66,6 @@ function Buttons() {
         </div>
     );
 }
-
 
 function Sudoku() {
     const [gameId, setGameId] = useState(1);
