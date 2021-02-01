@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Grid from "./Grid.js"
 import "../index.css";
 
-function CheckBoxes() {
+function CheckBoxes({setShowCandidates}) {
+
     return (
         <div>
             <label>
@@ -15,7 +16,7 @@ function CheckBoxes() {
                 Highlight Naked Singles
             </label>
             <label>
-                <input type="checkbox" />
+                <input type="checkbox" onChange={(e) => {setShowCandidates(e.target.checked)}}/>
                 Show Candidates
             </label>
         </div>
@@ -69,6 +70,8 @@ function Buttons() {
 
 function Sudoku() {
     const [gameId, setGameId] = useState(1);
+    
+    const [showCandidates, setShowCandidates] = useState(false);
 
     const starterGrid = [0, 0, 1, 0, 0, 0, 0, 2, 6,
                         7, 2, 0, 6, 9, 0, 4, 1, 0,
@@ -81,17 +84,84 @@ function Sudoku() {
                         0, 0, 0, 0, 0, 3, 0, 7, 0];
 
     const [grid, setGrid] = useState(starterGrid);
+    const [candidates, setCandidates] = useState(Array(81).fill([]));
+
+    function updateCandidates(cell, candidate) {
+        const tempCandidates = [...candidates];
+
+        var index = tempCandidates[cell].indexOf(candidate);
+        if (index === -1) {
+            tempCandidates[cell] = [...tempCandidates[cell], candidate];
+        } else {
+            tempCandidates[cell].splice(index, 1);
+        }
+
+        setCandidates(tempCandidates);
+    }
+
+    function findCandidates() {
+        // Find all numbers in each row
+        let rowNumbers = [];
+        for (let row = 0; row < 81; row+=9) {
+            let oneRow = [];
+            for (let column = 0; column < 9; column++) {
+                if (grid[row+column] > 0) {
+                    oneRow.push(grid[row+column]);
+                }
+            }
+            rowNumbers.push(oneRow);
+        }
+        
+        // Find all numbers in each column
+        let columnNumbers = [];
+        for (let column = 0; column < 9; column++) {
+            let oneColumn = [];
+            for (let row = 0; row < 81; row+=9) {
+                if (grid[row+column] > 0) {
+                    oneColumn.push(grid[row+column]);
+                }
+            }
+            columnNumbers.push(oneColumn);
+        }
+
+        // Find all numbers in each subgrid
+        const subGridStartingIndexes = [0, 3, 6, 27, 30, 33, 54, 57, 60]
+        let subGridNumbers = [];
+        for (let subGrid = 0; subGrid < 9; subGrid++) {
+            const subGridStartingIndex = subGridStartingIndexes[subGrid];
+            let oneSubGrid = []
+
+            for (let column = subGridStartingIndex; column < 3 + subGridStartingIndex; column++) {
+                for (let row = 0; row < 20; row+=9) {
+                    if (grid[row+column] > 0) {
+                        oneSubGrid.push(grid[row+column]);
+                    }
+                }
+            }
+            subGridNumbers.push(oneSubGrid);
+        }
+
+        console.log(rowNumbers);
+        console.log(columnNumbers);
+        console.log(subGridNumbers);
+    }
+
+    useEffect(() => {
+        findCandidates();
+
+    }, [showCandidates]);
 
     return (
         <div>
             <h1>Sudoku</h1>
             <div className="gridDisplay">
-                <Grid key={gameId} resetGame={() => setGameId(gameId + 1)} grid={grid} setGrid={setGrid} starterGrid={starterGrid}/>
+                <Grid key={gameId} resetGame={() => setGameId(gameId + 1)} 
+                      grid={grid} setGrid={setGrid} starterGrid={starterGrid} candidates={candidates} updateCandidates={updateCandidates}/>
                 <div>
                     <ComboBoxes />
                     <Buttons />
                 </div>
-                <CheckBoxes />
+                <CheckBoxes setShowCandidates={setShowCandidates}/>
             </div>
         </div>
     );
