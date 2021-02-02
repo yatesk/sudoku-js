@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 function CellHasCandidates(gridID, updateGrid, candidates, updateCandidates) {
     // const [candidates, setCandidates] = useState(Array(9).fill(false));

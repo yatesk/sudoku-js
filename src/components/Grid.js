@@ -4,7 +4,7 @@ import Cell from "./Cell.js"
 import "../index.css";
 
 function Grid({resetGame, grid, setGrid, starterGrid, candidates, updateCandidates}) {
-    const [invalidCellNumbers, setInvalidCellNumbers] = useState(Array(81).fill(false));
+    const [invalidCellNumbers, setInvalidCellNumbers] = useState([Array(81).fill(false)]);
 
     function onClick(e) {
         // console.log('board clicked');
@@ -27,7 +27,23 @@ function Grid({resetGame, grid, setGrid, starterGrid, candidates, updateCandidat
         setInvalidCellNumbers(newInvalidCells);
     }
 
-    function checkForInvalidCellNumbers() {
+    function checkForWinningGrid(invalidCells) {
+        let cellNumbers = 0;
+
+        for (let index = 0; index < grid.length; index++) {
+            if (grid[index] !== 0) {
+                cellNumbers += 1;
+            }
+        }
+
+        if (cellNumbers === 81 && invalidCells.length === 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function findAnyInvalidCellNumbers() {
         const invalidCells = [];
 
         // Horizontal check
@@ -84,11 +100,17 @@ function Grid({resetGame, grid, setGrid, starterGrid, candidates, updateCandidat
             }
         }
             
-        updateInvalidCellNumbers(invalidCells);
+        return invalidCells;
     }
 
     useEffect(() => {
-        checkForInvalidCellNumbers();
+        const invalidCells = findAnyInvalidCellNumbers();
+
+        updateInvalidCellNumbers(invalidCells);
+
+        if (checkForWinningGrid(invalidCells)) {
+            console.log('winner');
+        }
     }, [grid]);
 
     return (

@@ -73,15 +73,15 @@ function Sudoku() {
     
     const [showCandidates, setShowCandidates] = useState(false);
 
-    const starterGrid = [0, 0, 1, 0, 0, 0, 0, 2, 6,
-                        7, 2, 0, 6, 9, 0, 4, 1, 0,
-                        0, 0, 0, 0, 4, 0, 0, 0, 0,
-                        4, 0, 0, 7, 5, 0, 2, 0, 0,
-                        0, 8, 7, 9, 0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 6, 0, 4, 0, 0, 0, 0, 0,
-                        9, 0, 2, 0, 6, 0, 1, 0, 0,
-                        0, 0, 0, 0, 0, 3, 0, 7, 0];
+    const starterGrid = [0, 5, 7, 6, 4, 0, 0, 9, 0,
+                        3, 9, 8, 7, 0, 0, 0, 0, 0,
+                        0, 0, 0, 8, 0, 0, 5, 0, 2,
+                        8, 0, 4, 0, 7, 6, 0, 0, 0,
+                        0, 6, 0, 0, 2, 5, 7, 0, 0,
+                        7, 2, 0, 0, 0, 0, 6, 3, 0,
+                        0, 7, 0, 5, 0, 3, 0, 6, 8,
+                        0, 0, 3, 4, 6, 0, 0, 0, 1,
+                        6, 0, 1, 0, 0, 8, 3, 5, 0];
 
     const [grid, setGrid] = useState(starterGrid);
     const [candidates, setCandidates] = useState(Array(81).fill([]));
