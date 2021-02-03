@@ -141,15 +141,69 @@ function Sudoku() {
             subGridNumbers.push(oneSubGrid);
         }
 
-        console.log(rowNumbers);
-        console.log(columnNumbers);
-        console.log(subGridNumbers);
+        const possibleCandidates = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        const tempCandidates = [...candidates];
+        for (let index = 0; index < grid.length; index++) {
+            if (grid[index] === 0) {
+                const row = Math.floor(index/9);
+                const column = index%9;
+                const subGrid = findSubGrid(column, row);
+
+                const notPossibleCandidates = rowNumbers[row].concat(columnNumbers[column], subGridNumbers[subGrid]);
+                
+                const cellsCandidates = possibleCandidates.filter(i => !notPossibleCandidates.includes(i));
+
+                tempCandidates[index] = cellsCandidates;
+            }
+        }
+
+        setCandidates(tempCandidates);
+    }
+
+    // refactor?
+    function findSubGrid(column, row) {
+        
+        if (row < 3) {
+            if (column < 3) {
+                return 0;
+            }
+            else if (column < 6) {
+                return 1;
+            }
+            else if (column < 9) {
+                return 2;
+            }
+        } 
+        else if ( row < 6) {
+            if (column < 3) {
+                return 3;
+            }
+            else if (column < 6) {
+                return 4;
+            }
+            else if (column < 9) {
+                return 5;
+            }    
+        }
+        else if ( row < 9) {
+            if (column < 3) {
+                return 6;
+            }
+            else if (column < 6) {
+                return 7;
+            }
+            else if (column < 9) {
+                return 8;
+            }    
+        }
     }
 
     useEffect(() => {
-        findCandidates();
+        if (showCandidates === true) {
+            findCandidates();
+        }
 
-    }, [showCandidates]);
+    }, [showCandidates, grid]);
 
     return (
         <div>
