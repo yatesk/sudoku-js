@@ -3,12 +3,8 @@ import React, { useState, useEffect } from "react";
 import Cell from "./Cell.js"
 import "../index.css";
 
-function Grid({resetGame, grid, setGrid, starterGrid, candidates, updateCandidates}) {
+function Grid({grid, setGrid, starterGrid, candidates, updateCandidates, nakedSinglesToggle}) {
     const [invalidCellNumbers, setInvalidCellNumbers] = useState([Array(81).fill(false)]);
-
-    function onClick(e) {
-        // console.log('board clicked');
-    }
 
     function updateGrid(gridID, value) {
         const newGrid = [...grid];
@@ -114,7 +110,7 @@ function Grid({resetGame, grid, setGrid, starterGrid, candidates, updateCandidat
     }, [grid]);
 
     return (
-        <div className='gameBoardGrid' onClick={onClick}>                                                                                          
+        <div className='gameBoardGrid'>                                                                                          
             { grid.map((item, index) => 
                 <Cell gridID={index} 
                       value={item} 
@@ -122,7 +118,8 @@ function Grid({resetGame, grid, setGrid, starterGrid, candidates, updateCandidat
                       revealedCell={starterGrid[index] !== 0} 
                       invalidCellNumber={invalidCellNumbers[index]} 
                       candidates={candidates[index]} 
-                      updateCandidates={updateCandidates} /> )}
+                      updateCandidates={updateCandidates} 
+                      nakedSinglesToggle={nakedSinglesToggle} /> )}
         </div> 
     );
 }

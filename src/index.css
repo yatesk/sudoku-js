@@ -90,3 +90,11 @@
     margin-top: -26px;
     margin-left: 48px;
   }
+
+  .redText {
+    color: red;
+  }
+
+  .blackText {
+    color: black;
+  }

@@ -5,14 +5,11 @@ import CellHasCandidates from "./CellHasCandidates.js"
 
 import "../index.css";
 
-function Cell({gridID, value, updateGrid, revealedCell, invalidCellNumber, candidates, updateCandidates}) {
-    // useEffect(() => {
-    //     console.log("test");
-    // }, [value]);
+function Cell({gridID, value, updateGrid, revealedCell, invalidCellNumber, candidates, updateCandidates, nakedSinglesToggle}) {
 
     return (
         <>
-            {value !== 0 ? CellHasNumber(gridID, value, updateGrid, revealedCell, invalidCellNumber) : CellHasCandidates(gridID, updateGrid, candidates, updateCandidates) }
+            {value !== 0 ? CellHasNumber(gridID, value, updateGrid, revealedCell, invalidCellNumber) : CellHasCandidates(gridID, updateGrid, candidates, updateCandidates, nakedSinglesToggle) }
         </>
     );
 }

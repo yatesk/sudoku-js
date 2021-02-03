@@ -3,20 +3,19 @@ import React, { useState, useEffect } from "react";
 import Grid from "./Grid.js"
 import "../index.css";
 
-function CheckBoxes({setShowCandidates}) {
-
+function CheckBoxes({showCandidates, setShowCandidates, highlightHiddenSingles, setHighlightHiddenSingles, nakedSinglesToggle, setNakedSinglesToggle}) {
     return (
         <div>
             <label>
-                <input type="checkbox" />
+                <input type="checkbox"  onChange={() => {setHighlightHiddenSingles(!highlightHiddenSingles)}} />
                 Highlight Hidden Singles
             </label>
             <label>
-                <input type="checkbox" />
+                <input type="checkbox" onChange={() => {setNakedSinglesToggle(!nakedSinglesToggle)}} />
                 Highlight Naked Singles
             </label>
             <label>
-                <input type="checkbox" onChange={(e) => {setShowCandidates(e.target.checked)}}/>
+                <input type="checkbox" onChange={() => {setShowCandidates(!showCandidates)}} />
                 Show Candidates
             </label>
         </div>
@@ -44,14 +43,15 @@ function ComboBoxes() {
     );
 }
 
-function Buttons() {
+function Buttons({resetPuzzle}) {
+
     return (
         <div className='blocker'>
             <div>
-                <input type="button" id="newGame" value="New Game"/>
+                <input type="button" id="newGameButton" value="New Game"/>
             </div>
             <div>
-                <input type="button" id="pauseGame" value="Pause Game"/>
+                <input type="button" id="pauseGameButton" value="Pause Game"/>
             </div>
             
             <div>
@@ -59,10 +59,10 @@ function Buttons() {
             </div>
             
             <div>
-                <input type="button" id="resetPuzzle" value="Reset Puzzle"/>
+                <input type="button" id="resetPuzzleButton" value="Reset Puzzle" onClick={resetPuzzle}/>
             </div>
             <div>
-                <input type="button" id="solvePuzzle" value="Solve Puzzle"/>
+                <input type="button" id="solvePuzzleButton" value="Solve Puzzle"/>
             </div>
         </div>
     );
@@ -71,6 +71,8 @@ function Buttons() {
 function Sudoku() {
     const [gameId, setGameId] = useState(1);
     
+    const [highlightHiddenSingles, setHighlightHiddenSingles] = useState(false);
+    const [nakedSinglesToggle, setNakedSinglesToggle] = useState(false);
     const [showCandidates, setShowCandidates] = useState(false);
 
     const starterGrid = [0, 5, 7, 6, 4, 0, 0, 9, 0,
@@ -85,6 +87,13 @@ function Sudoku() {
 
     const [grid, setGrid] = useState(starterGrid);
     const [candidates, setCandidates] = useState(Array(81).fill([]));
+
+
+    function resetPuzzle() {
+        console.log('resetPuzzle');
+        setGrid(starterGrid);
+        setCandidates(Array(81).fill([]));
+    }
 
     function updateCandidates(cell, candidate) {
         const tempCandidates = [...candidates];
@@ -201,6 +210,8 @@ function Sudoku() {
     useEffect(() => {
         if (showCandidates === true) {
             findCandidates();
+        } else {
+            setCandidates(Array(81).fill([]));
         }
 
     }, [showCandidates, grid]);
@@ -209,13 +220,19 @@ function Sudoku() {
         <div>
             <h1>Sudoku</h1>
             <div className="gridDisplay">
-                <Grid key={gameId} resetGame={() => setGameId(gameId + 1)} 
-                      grid={grid} setGrid={setGrid} starterGrid={starterGrid} candidates={candidates} updateCandidates={updateCandidates}/>
+                <Grid key={gameId}
+                      grid={grid} setGrid={setGrid} starterGrid={starterGrid} candidates={candidates} updateCandidates={updateCandidates} nakedSinglesToggle={nakedSinglesToggle}/>
                 <div>
                     <ComboBoxes />
-                    <Buttons />
+                    <Buttons resetPuzzle={resetPuzzle}/>
                 </div>
-                <CheckBoxes setShowCandidates={setShowCandidates}/>
+                <CheckBoxes showCandidates={showCandidates} 
+                            setShowCandidates={setShowCandidates}
+                            highlightHiddenSingles={highlightHiddenSingles}
+                            setHighlightHiddenSingles={setHighlightHiddenSingles}
+                            nakedSinglesToggle={nakedSinglesToggle}
+                            setNakedSinglesToggle={setNakedSinglesToggle}
+                            />
             </div>
         </div>
     );
