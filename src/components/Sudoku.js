@@ -3,19 +3,19 @@ import React, { useState, useEffect } from "react";
 import Grid from "./Grid.js"
 import "../index.css";
 
-function CheckBoxes({showCandidates, setShowCandidates, highlightHiddenSingles, setHighlightHiddenSingles, nakedSinglesToggle, setNakedSinglesToggle}) {
+function CheckBoxes({showCandidatesToggle, setShowCandidatesToggle, hiddenSinglesToggle, setHiddenSinglesToggle, nakedSinglesToggle, setNakedSinglesToggle}) {
     return (
         <div>
             <label>
-                <input type="checkbox"  onChange={() => {setHighlightHiddenSingles(!highlightHiddenSingles)}} />
-                Highlight Hidden Singles
+                <input type="checkbox" checked={hiddenSinglesToggle} onChange={() => {setHiddenSinglesToggle(!hiddenSinglesToggle)}} />
+                Show Hidden Singles
             </label>
             <label>
-                <input type="checkbox" onChange={() => {setNakedSinglesToggle(!nakedSinglesToggle)}} />
-                Highlight Naked Singles
+                <input type="checkbox" checked={nakedSinglesToggle} onChange={() => {setNakedSinglesToggle(!nakedSinglesToggle)}} />
+                Show Naked Singles
             </label>
             <label>
-                <input type="checkbox" onChange={() => {setShowCandidates(!showCandidates)}} />
+                <input type="checkbox" onChange={() => {setShowCandidatesToggle(!showCandidatesToggle)}} />
                 Show Candidates
             </label>
         </div>
@@ -71,26 +71,26 @@ function Buttons({resetPuzzle}) {
 function Sudoku() {
     const [gameId, setGameId] = useState(1);
     
-    const [highlightHiddenSingles, setHighlightHiddenSingles] = useState(false);
+    const [hiddenSinglesToggle, setHiddenSinglesToggle] = useState(false);
     const [nakedSinglesToggle, setNakedSinglesToggle] = useState(false);
-    const [showCandidates, setShowCandidates] = useState(false);
+    const [showCandidatesToggle, setShowCandidatesToggle] = useState(false);
 
-    const starterGrid = [0, 5, 7, 6, 4, 0, 0, 9, 0,
-                        3, 9, 8, 7, 0, 0, 0, 0, 0,
-                        0, 0, 0, 8, 0, 0, 5, 0, 2,
-                        8, 0, 4, 0, 7, 6, 0, 0, 0,
-                        0, 6, 0, 0, 2, 5, 7, 0, 0,
-                        7, 2, 0, 0, 0, 0, 6, 3, 0,
-                        0, 7, 0, 5, 0, 3, 0, 6, 8,
-                        0, 0, 3, 4, 6, 0, 0, 0, 1,
-                        6, 0, 1, 0, 0, 8, 3, 5, 0];
+    const starterGrid = [0, 0, 5, 0, 6, 0, 3, 2, 0,
+                         0, 0, 0, 3, 0, 0, 0, 0, 4,
+                         0, 0, 0, 9, 0, 7, 0, 0, 0,
+                         3, 0, 2, 8, 0, 0, 0, 0, 7,
+                         0, 0, 7, 0, 0, 0, 4, 0, 5,
+                         0, 9, 0, 0, 0, 1, 0, 0, 8,
+                         0, 0, 3, 0, 0, 0, 0, 6, 0,
+                         0, 0, 0, 0, 7, 0, 0, 0, 0,
+                         8, 6, 0, 0, 2, 0, 0, 0, 0];
 
     const [grid, setGrid] = useState(starterGrid);
     const [candidates, setCandidates] = useState(Array(81).fill([]));
-
+    
+    const [hiddenSingles, setHiddenSingles] = useState(Array(81).fill([]));
 
     function resetPuzzle() {
-        console.log('resetPuzzle');
         setGrid(starterGrid);
         setCandidates(Array(81).fill([]));
     }
@@ -106,6 +106,76 @@ function Sudoku() {
         }
 
         setCandidates(tempCandidates);
+    }
+
+    // refactor?
+    function singles(array) {
+        for (var index = 0, single = []; index < array.length; index++) {
+          if (array.indexOf(array[index], array.indexOf(array[index]) + 1) === -1)
+            single.push(array[index]);
+        };
+        return single;
+      };
+      
+    // refactor?  BUGS
+    function findHiddenSingles() {
+        // rows singles
+        let allTheRowSingles = [];
+        for (let row = 0; row < 81; row+=9) {
+            let oneRow = [];
+            for (let index = row; index < row+9; index++) {
+                oneRow = oneRow.concat(candidates[index]);
+            }
+            allTheRowSingles.push(singles(oneRow));
+        }
+
+        // columns singles
+        let allTheColumnSingles = [];
+        for (let column = 0; column < 9; column++) {
+            let oneColumn = [];
+            for (let index = column; index < 81; index+=9) {
+                oneColumn = oneColumn.concat(candidates[index]);
+            }
+            allTheColumnSingles.push(singles(oneColumn));
+        }
+
+        // subgrid singles
+        const subGridStartingIndexes = [0, 3, 6, 27, 30, 33, 54, 57, 60]
+        let allTheSubGridCandidates = [];
+        for (let subGrid = 0; subGrid < 9; subGrid++) {
+            const subGridStartingIndex = subGridStartingIndexes[subGrid];
+            let oneSubGrid = []
+
+            for (let column = subGridStartingIndex; column < 3 + subGridStartingIndex; column++) {
+                for (let row = 0; row < 20; row+=9) {
+                    oneSubGrid = oneSubGrid.concat(candidates[row+column]);
+                }
+            }
+            allTheSubGridCandidates.push(singles(oneSubGrid));
+        }
+
+        const tempHiddenSingles = []
+        for (let index = 0; index < 81; index++) {
+            const tempSingle = []
+            for (let candidate = 0; candidate < candidates[index].length; candidate++) {
+                const theRow = Math.floor(index/9);
+                const theColumn = index%9;
+                const theSubGrid = findSubGrid(theColumn, theRow);
+
+                if (allTheRowSingles[theRow].includes(candidates[index][candidate]) ||
+                    allTheColumnSingles[theColumn].includes(candidates[index][candidate]) ||
+                    allTheSubGridCandidates[theSubGrid].includes(candidates[index][candidate])) {
+                        tempSingle.push(candidates[index][candidate]);
+                }
+            }
+            if (tempSingle.length > 0) {
+                tempHiddenSingles.push(tempSingle);
+            } else {
+                tempHiddenSingles.push([]);
+            }
+            
+        }
+        setHiddenSingles(tempHiddenSingles);
     }
 
     function findCandidates() {
@@ -151,7 +221,7 @@ function Sudoku() {
         }
 
         const possibleCandidates = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-        const tempCandidates = [...candidates];
+        const tempCandidates = Array(81).fill([]);
         for (let index = 0; index < grid.length; index++) {
             if (grid[index] === 0) {
                 const row = Math.floor(index/9);
@@ -159,7 +229,6 @@ function Sudoku() {
                 const subGrid = findSubGrid(column, row);
 
                 const notPossibleCandidates = rowNumbers[row].concat(columnNumbers[column], subGridNumbers[subGrid]);
-                
                 const cellsCandidates = possibleCandidates.filter(i => !notPossibleCandidates.includes(i));
 
                 tempCandidates[index] = cellsCandidates;
@@ -208,28 +277,37 @@ function Sudoku() {
     }
 
     useEffect(() => {
-        if (showCandidates === true) {
-            findCandidates();
-        } else {
-            setCandidates(Array(81).fill([]));
+        if (hiddenSinglesToggle === true) {
+            findHiddenSingles();
         }
+    }, [candidates]);
 
-    }, [showCandidates, grid]);
+    
+    useEffect(() => {
+        findCandidates();
+
+        if (showCandidatesToggle === false) {
+            setHiddenSinglesToggle(false);
+            setNakedSinglesToggle(false);
+            setCandidates(Array(81).fill([]));
+        } 
+
+    }, [hiddenSinglesToggle, nakedSinglesToggle, showCandidatesToggle, grid]);
 
     return (
         <div>
             <h1>Sudoku</h1>
             <div className="gridDisplay">
                 <Grid key={gameId}
-                      grid={grid} setGrid={setGrid} starterGrid={starterGrid} candidates={candidates} updateCandidates={updateCandidates} nakedSinglesToggle={nakedSinglesToggle}/>
+                      grid={grid} setGrid={setGrid} starterGrid={starterGrid} candidates={candidates} updateCandidates={updateCandidates} nakedSinglesToggle={nakedSinglesToggle} hiddenSinglesToggle={hiddenSinglesToggle} hiddenSingles={hiddenSingles}/>
                 <div>
                     <ComboBoxes />
                     <Buttons resetPuzzle={resetPuzzle}/>
                 </div>
-                <CheckBoxes showCandidates={showCandidates} 
-                            setShowCandidates={setShowCandidates}
-                            highlightHiddenSingles={highlightHiddenSingles}
-                            setHighlightHiddenSingles={setHighlightHiddenSingles}
+                <CheckBoxes showCandidatesToggle={showCandidatesToggle} 
+                            setShowCandidatesToggle={setShowCandidatesToggle}
+                            hiddenSinglesToggle={hiddenSinglesToggle}
+                            setHiddenSinglesToggle={setHiddenSinglesToggle}
                             nakedSinglesToggle={nakedSinglesToggle}
                             setNakedSinglesToggle={setNakedSinglesToggle}
                             />
