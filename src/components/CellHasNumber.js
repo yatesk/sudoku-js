@@ -13,9 +13,14 @@ function CellHasNumber(gridID, value, updateGrid, revealedCell, invalidCellNumbe
         }
     }
 
+    // clunky
+    let styleObj = {
+        marginRight: "5px",
+    }
+
     return (
-        <div>
-            <div className={revealedCell ? 'cellNumberRevealed' : 'cellNumber'} onContextMenu={onContextMenu} onMouseDown={mouseDownHandler}>
+        <div style={styleObj}>
+            <div className={revealedCell ? 'cellNumberRevealed' : 'cellNumber'} onContextMenu={onContextMenu} onMouseDown={mouseDownHandler} >
                 {value}
                 <div className={invalidCellNumber ? 'invalidCellNumber' : ''}></div>
             </div>

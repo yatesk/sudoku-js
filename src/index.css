@@ -13,11 +13,11 @@
   
   .gameBoardGrid {
     display: grid;
-    grid-template-rows: 75px 75px 75px 75px 75px 75px 75px 75px 75px;
-    grid-template-columns: 75px 75px 75px 75px 75px 75px 75px 75px 75px;
-    /* align-content: center; */
+    grid-template-rows: 75px 75px 80px 75px 75px 80px 75px 75px 75px;
+    grid-template-columns: 75px 75px 80px 75px 75px 80px 75px 75px 75px;
     margin: 40px;
-    background-color: darkgray;
+    background-color: black;
+    outline: 5px solid black;
   }
   
   .cell {
@@ -26,14 +26,14 @@
     grid-template-columns: 25px 25px 25px;
     width: 75px;
     height: 75px;
-    outline:1px solid white;
+    outline:1px solid black;
   }
 
   .cellNumber {
     font-size: 50px;
     width: 75px;
     height: 75px;
-    outline:1px solid white;
+    outline:1px solid black;
     text-align: center;
     vertical-align: middle;
     line-height: 75px; 
@@ -41,7 +41,7 @@
   }
 
   .subGridOutline {
-    outline:1px solid Black;
+    outline: 1px solid Black;
     background-color: red;
   }
 
@@ -49,7 +49,7 @@
     font-size: 50px;
     width: 75px;
     height: 75px;
-    outline:1px solid white;
+    outline:1px solid black;
     text-align: center;
     vertical-align: middle;
     line-height: 75px; 

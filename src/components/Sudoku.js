@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import Grid from "./Grid.js"
+import Timer from "./Timer.js"
 import "../index.css";
 
 function CheckBoxes({showCandidatesToggle, setShowCandidatesToggle, hiddenSinglesToggle, setHiddenSinglesToggle, nakedSinglesToggle, setNakedSinglesToggle}) {
@@ -55,7 +56,7 @@ function Buttons({resetPuzzle}) {
             </div>
             
             <div>
-                <label>00:00:01</label>
+                <Timer/>
             </div>
             
             <div>
