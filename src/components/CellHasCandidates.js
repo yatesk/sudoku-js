@@ -1,6 +1,6 @@
 import React from "react";
 
-function CellHasCandidates(gridID, updateGrid, candidates, updateCandidates, nakedSinglesToggle, hiddenSinglesToggle, hiddenSingles) {
+function CellHasCandidates(gridID, updateGrid, candidates, updateCandidates, nakedSinglesToggle, hiddenSinglesToggle, hiddenSingles, isGamePaused) {
 
     function onClick(e) {
         updateGrid(gridID, parseInt(e.target.id));
@@ -24,13 +24,27 @@ function CellHasCandidates(gridID, updateGrid, candidates, updateCandidates, nak
         return  hiddenSinglesToggle && hiddenSingles[gridID].includes(number);
     }
 
-    // clunky
-    let styleObj = {
-        marginRight: "5px",
+    // refactor
+    function getStyle() {
+        let notPaused = {
+            marginRight: "5px",
+        }
+
+        let paused = {
+            marginRight: "5px",
+            pointerEvents: "none",
+            opacity: "0.4",
+        }
+
+        if (isGamePaused) {
+            return paused;
+        } else {
+            return notPaused;
+        }
     }
 
     return (
-        <div style={styleObj} className='cell' onClick={onClick} onContextMenu={onContextMenu} onMouseDown={mouseDownHandler}>
+        <div style={getStyle()} className='cell' onClick={onClick} onContextMenu={onContextMenu} onMouseDown={mouseDownHandler} >
             { candidates.includes(1) ? <div id="1" className={`candidateCell ${highlightNakedSingles() || highlightHiddenSingles(1) ? "redText" : "blackText"}`}>1</div> : <div id="1" className='candidateCell'/> }
             { candidates.includes(2) ? <div id="2" className={`candidateCell ${highlightNakedSingles() || highlightHiddenSingles(2) ? "redText" : "blackText"}`}>2</div> : <div id="2" className='candidateCell'/> }
             { candidates.includes(3) ? <div id="3" className={`candidateCell ${highlightNakedSingles() || highlightHiddenSingles(3) ? "redText" : "blackText"}`}>3</div> : <div id="3" className='candidateCell'/> }

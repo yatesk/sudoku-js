@@ -1,4 +1,4 @@
-function CellHasNumber(gridID, value, updateGrid, revealedCell, invalidCellNumber) {
+function CellHasNumber(gridID, value, updateGrid, revealedCell, invalidCellNumber, isGamePaused) {
     function onContextMenu(e) {
         e.preventDefault();
     }
@@ -13,13 +13,27 @@ function CellHasNumber(gridID, value, updateGrid, revealedCell, invalidCellNumbe
         }
     }
 
-    // clunky
-    let styleObj = {
-        marginRight: "5px",
+    // refactor
+    function getStyle() {
+        let notPaused = {
+            marginRight: "5px",
+        }
+
+        let paused = {
+            marginRight: "5px",
+            pointerEvents: "none",
+            opacity: "0.4",
+        }
+
+        if (isGamePaused) {
+            return paused;
+        } else {
+            return notPaused;
+        }
     }
 
     return (
-        <div style={styleObj}>
+        <div style={getStyle()}>
             <div className={revealedCell ? 'cellNumberRevealed' : 'cellNumber'} onContextMenu={onContextMenu} onMouseDown={mouseDownHandler} >
                 {value}
                 <div className={invalidCellNumber ? 'invalidCellNumber' : ''}></div>

@@ -5,10 +5,10 @@ import CellHasCandidates from "./CellHasCandidates.js"
 
 import "../index.css";
 
-function Cell({gridID, value, updateGrid, revealedCell, invalidCellNumber, candidates, updateCandidates, nakedSinglesToggle, hiddenSinglesToggle, hiddenSingles}) {
+function Cell({gridID, value, updateGrid, revealedCell, invalidCellNumber, candidates, updateCandidates, nakedSinglesToggle, hiddenSinglesToggle, hiddenSingles, isGamePaused}) {
     return (
         <>
-            {value !== 0 ? CellHasNumber(gridID, value, updateGrid, revealedCell, invalidCellNumber) : CellHasCandidates(gridID, updateGrid, candidates, updateCandidates, nakedSinglesToggle, hiddenSinglesToggle, hiddenSingles) }
+            {value !== 0 ? CellHasNumber(gridID, value, updateGrid, revealedCell, invalidCellNumber, isGamePaused) : CellHasCandidates(gridID, updateGrid, candidates, updateCandidates, nakedSinglesToggle, hiddenSinglesToggle, hiddenSingles, isGamePaused) }
         </>
     );
 }

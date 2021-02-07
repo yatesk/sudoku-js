@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Cell from "./Cell.js"
 import "../index.css";
 
-function Grid({grid, setGrid, starterGrid, candidates, updateCandidates, nakedSinglesToggle, hiddenSinglesToggle, hiddenSingles}) {
+function Grid({grid, setGrid, starterGrid, candidates, updateCandidates, nakedSinglesToggle, hiddenSinglesToggle, hiddenSingles, isGamePaused}) {
     const [invalidCellNumbers, setInvalidCellNumbers] = useState([Array(81).fill(false)]);
 
     function updateGrid(gridID, value) {
@@ -122,7 +122,8 @@ function Grid({grid, setGrid, starterGrid, candidates, updateCandidates, nakedSi
                       updateCandidates={updateCandidates} 
                       nakedSinglesToggle={nakedSinglesToggle}
                       hiddenSinglesToggle={hiddenSinglesToggle}
-                      hiddenSingles={hiddenSingles}/> 
+                      hiddenSingles={hiddenSingles}
+                      isGamePaused={isGamePaused}/> 
                       )}
         </div> 
     );

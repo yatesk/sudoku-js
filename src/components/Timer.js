@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../index.css";
 
-function Timer() {
+function Timer({pauseGameToggle}) {
 
   function displayTime(totalSeconds) {
     let timeString = '0:00';
@@ -40,6 +40,11 @@ function Timer() {
         }
     }
 
+    // temp
+    if (pauseGameToggle) {
+        timeString += ' (PAUSED)';
+    }
+
     return timeString;
   };
 
@@ -47,7 +52,9 @@ function Timer() {
 
   useEffect(() => {
     const intervalID = setTimeout(() => {
-        setTotalSeconds(totalSeconds + 1);
+        if(!pauseGameToggle) {
+            setTotalSeconds(totalSeconds + 1);
+    }
         }, 1000);
     return () => clearInterval(intervalID);
   });

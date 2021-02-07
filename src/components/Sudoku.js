@@ -44,7 +44,7 @@ function ComboBoxes() {
     );
 }
 
-function Buttons({resetPuzzle}) {
+function Buttons({pauseGame, isGamePaused, resetPuzzle}) {
 
     return (
         <div className='blocker'>
@@ -52,11 +52,11 @@ function Buttons({resetPuzzle}) {
                 <input type="button" id="newGameButton" value="New Game"/>
             </div>
             <div>
-                <input type="button" id="pauseGameButton" value="Pause Game"/>
+                <input type="button" id="pauseGameButton" value="Pause Game" onClick={pauseGame}/>
             </div>
             
             <div>
-                <Timer/>
+                <Timer isGamePaused={isGamePaused} />
             </div>
             
             <div>
@@ -76,6 +76,8 @@ function Sudoku() {
     const [nakedSinglesToggle, setNakedSinglesToggle] = useState(false);
     const [showCandidatesToggle, setShowCandidatesToggle] = useState(false);
 
+    const [isGamePaused, setIsGamePaused] = useState(false);
+
     const starterGrid = [0, 0, 5, 0, 6, 0, 3, 2, 0,
                          0, 0, 0, 3, 0, 0, 0, 0, 4,
                          0, 0, 0, 9, 0, 7, 0, 0, 0,
@@ -94,6 +96,10 @@ function Sudoku() {
     function resetPuzzle() {
         setGrid(starterGrid);
         setCandidates(Array(81).fill([]));
+    }
+
+    function pauseGame() {
+        setIsGamePaused(!isGamePaused);
     }
 
     function updateCandidates(cell, candidate) {
@@ -300,10 +306,18 @@ function Sudoku() {
             <h1>Sudoku</h1>
             <div className="gridDisplay">
                 <Grid key={gameId}
-                      grid={grid} setGrid={setGrid} starterGrid={starterGrid} candidates={candidates} updateCandidates={updateCandidates} nakedSinglesToggle={nakedSinglesToggle} hiddenSinglesToggle={hiddenSinglesToggle} hiddenSingles={hiddenSingles}/>
+                      grid={grid} 
+                      setGrid={setGrid} 
+                      starterGrid={starterGrid} 
+                      candidates={candidates} 
+                      updateCandidates={updateCandidates} 
+                      nakedSinglesToggle={nakedSinglesToggle} 
+                      hiddenSinglesToggle={hiddenSinglesToggle} 
+                      hiddenSingles={hiddenSingles}
+                      isGamePaused={isGamePaused}/>
                 <div>
                     <ComboBoxes />
-                    <Buttons resetPuzzle={resetPuzzle}/>
+                    <Buttons pauseGame={pauseGame} isGamePaused={isGamePaused} resetPuzzle={resetPuzzle}/>
                 </div>
                 <CheckBoxes showCandidatesToggle={showCandidatesToggle} 
                             setShowCandidatesToggle={setShowCandidatesToggle}
