@@ -44,26 +44,25 @@ function ComboBoxes() {
     );
 }
 
-function Buttons({pauseGame, isGamePaused, resetPuzzle}) {
-
+function Buttons({newGame, pauseGame, solvePuzzle, isGamePaused, resetPuzzle, resetTimer, setResetTimer}) {
     return (
         <div className='blocker'>
             <div>
-                <input type="button" id="newGameButton" value="New Game"/>
+                <input type="button" id="newGameButton" value="New Game" onClick={newGame}/>
             </div>
             <div>
                 <input type="button" id="pauseGameButton" value="Pause Game" onClick={pauseGame}/>
             </div>
             
             <div>
-                <Timer isGamePaused={isGamePaused} />
+                <Timer isGamePaused={isGamePaused} resetTimer={resetTimer} setResetTimer={setResetTimer}/>
             </div>
             
             <div>
                 <input type="button" id="resetPuzzleButton" value="Reset Puzzle" onClick={resetPuzzle}/>
             </div>
             <div>
-                <input type="button" id="solvePuzzleButton" value="Solve Puzzle"/>
+                <input type="button" id="solvePuzzleButton" value="Solve Puzzle" onClick={solvePuzzle}/>
             </div>
         </div>
     );
@@ -71,10 +70,14 @@ function Buttons({pauseGame, isGamePaused, resetPuzzle}) {
 
 function Sudoku() {
     const [gameId, setGameId] = useState(1);
+
+    const [resetTimer, setResetTimer] = useState(false);
     
     const [hiddenSinglesToggle, setHiddenSinglesToggle] = useState(false);
     const [nakedSinglesToggle, setNakedSinglesToggle] = useState(false);
     const [showCandidatesToggle, setShowCandidatesToggle] = useState(false);
+
+    const [solvePuzzleToggle, setSolvePuzzleToggle] = useState(false);
 
     const [isGamePaused, setIsGamePaused] = useState(false);
 
@@ -96,12 +99,31 @@ function Sudoku() {
     function resetPuzzle() {
         setGrid(starterGrid);
         setCandidates(Array(81).fill([]));
+        setHiddenSingles(Array(81).fill([]));
+        setResetTimer(true);
     }
 
     function pauseGame() {
         setIsGamePaused(!isGamePaused);
     }
 
+    // broken
+    function newGame() {
+        fetch('https://cors-anywhere.herokuapp.com/https://www.nytimes.com/puzzles/sudoku/medium')
+            .then(response => {
+             //   console.log(response);
+                return response.text();
+            })
+            .then(function (html) {
+                console.log(html);
+                return html;
+            })
+            .catch(function (err) {
+                // "Not Found"
+                console.log(err.statusText);
+            });
+        }
+ 
     function updateCandidates(cell, candidate) {
         const tempCandidates = [...candidates];
 
@@ -240,6 +262,9 @@ function Sudoku() {
 
                 tempCandidates[index] = cellsCandidates;
             }
+            else {
+                tempCandidates[index] = [grid[index]];
+            }
         }
 
         setCandidates(tempCandidates);
@@ -283,12 +308,87 @@ function Sudoku() {
         }
     }
 
+    function solvePuzzleClicked() {
+        setSolvePuzzleToggle(true);
+      //  findCandidates();
+    }
+
+    function isValid(theGrid, index, num) {
+        const row = Math.floor(index/9);
+        const column = index%9;
+        
+        // row
+        for (let x = row * 9 ; x < (row*9)+9; x++) {
+            if (theGrid[x] === num) {
+                return false;
+            }
+        }
+
+        // column
+        for (let x = column; x < 81; x+=9) {
+            if (theGrid[x] === num) {
+                return false;
+            }       
+        }
+        
+        // subGrid
+       const theSubGrid = findSubGrid(column, row);
+
+      const subGridStartingIndex = Math.floor(theSubGrid / 3) * 27 + ((theSubGrid % 3) * 3);
+
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (theGrid[subGridStartingIndex + i + (j*9)] === num) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    function solveSuduko(gridCopy, index) {
+        // exit condition if entire grid is solved
+        if (index === 81) {
+            return true;
+        }
+           
+        // checks if cell already has a number in it
+        if (gridCopy[index] > 0) {
+            return solveSuduko(gridCopy, index + 1);
+        }
+     
+        for (let num = 1; num <= 9; num++) {
+            if (isValid(gridCopy, index, num)) {
+                  gridCopy[index] = num;
+
+                if (solveSuduko(gridCopy, index + 1)) {
+                    setGrid(gridCopy);
+                    return true;
+                }
+            }
+            gridCopy[index] = 0;
+        }
+        return false;
+    }
+
+    useEffect(() => {
+        if (solvePuzzleToggle === true) {
+            let gridCopy = [...grid];
+
+            if (solveSuduko(gridCopy, 0) === true) {
+                console.log('puzzle solved');
+                setSolvePuzzleToggle(false);
+            }
+        }
+    }, [solvePuzzleToggle]);
+
+
     useEffect(() => {
         if (hiddenSinglesToggle === true) {
             findHiddenSingles();
         }
     }, [candidates]);
-
     
     useEffect(() => {
         findCandidates();
@@ -298,7 +398,6 @@ function Sudoku() {
             setNakedSinglesToggle(false);
             setCandidates(Array(81).fill([]));
         } 
-
     }, [hiddenSinglesToggle, nakedSinglesToggle, showCandidatesToggle, grid]);
 
     return (
@@ -317,7 +416,13 @@ function Sudoku() {
                       isGamePaused={isGamePaused}/>
                 <div>
                     <ComboBoxes />
-                    <Buttons pauseGame={pauseGame} isGamePaused={isGamePaused} resetPuzzle={resetPuzzle}/>
+                    <Buttons newGame={newGame} 
+                            pauseGame={pauseGame} 
+                            solvePuzzle={solvePuzzleClicked} 
+                            isGamePaused={isGamePaused} 
+                            resetPuzzle={resetPuzzle} 
+                            resetTimer={resetTimer}
+                            setResetTimer={setResetTimer}/>
                 </div>
                 <CheckBoxes showCandidatesToggle={showCandidatesToggle} 
                             setShowCandidatesToggle={setShowCandidatesToggle}
