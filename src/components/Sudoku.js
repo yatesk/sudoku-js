@@ -81,7 +81,7 @@ function Sudoku() {
 
     const [isGamePaused, setIsGamePaused] = useState(false);
 
-    const starterGrid = [0, 0, 5, 0, 6, 0, 3, 2, 0,
+    const starterGrid2 = [0, 0, 5, 0, 6, 0, 3, 2, 0,
                          0, 0, 0, 3, 0, 0, 0, 0, 4,
                          0, 0, 0, 9, 0, 7, 0, 0, 0,
                          3, 0, 2, 8, 0, 0, 0, 0, 7,
@@ -90,6 +90,16 @@ function Sudoku() {
                          0, 0, 3, 0, 0, 0, 0, 6, 0,
                          0, 0, 0, 0, 7, 0, 0, 0, 0,
                          8, 6, 0, 0, 2, 0, 0, 0, 0];
+
+    const starterGrid = [0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        0, 0, 0, 0, 0, 0, 0, 0, 0];
 
     const [grid, setGrid] = useState(starterGrid);
     const [candidates, setCandidates] = useState(Array(81).fill([]));
@@ -354,20 +364,20 @@ function Sudoku() {
         }
            
         // checks if cell already has a number in it
-        if (gridCopy[index] > 0) {
-            return solveSuduko(gridCopy, index + 1);
+        if (grid[index] > 0) {
+            return solveSuduko(grid, index + 1);
         }
      
         for (let num = 1; num <= 9; num++) {
-            if (isValid(gridCopy, index, num)) {
-                  gridCopy[index] = num;
+            if (isValid(grid, index, num)) {
+                  grid[index] = num;
 
-                if (solveSuduko(gridCopy, index + 1)) {
-                    setGrid(gridCopy);
+                if (solveSuduko(grid, index + 1)) {
+                    setGrid(grid);
                     return true;
                 }
             }
-            gridCopy[index] = 0;
+            grid[index] = 0;
         }
         return false;
     }
@@ -379,6 +389,8 @@ function Sudoku() {
             if (solveSuduko(gridCopy, 0) === true) {
                 console.log('puzzle solved');
                 setSolvePuzzleToggle(false);
+            } else {
+                console.log('not solvable');
             }
         }
     }, [solvePuzzleToggle]);
