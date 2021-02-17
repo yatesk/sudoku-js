@@ -2,7 +2,6 @@
   html {
     font-size: 20px;
     background-color: rgb(167, 167, 167);
-
     cursor: pointer;
   }
   
@@ -15,7 +14,7 @@
     display: grid;
     grid-template-rows: 75px 75px 80px 75px 75px 80px 75px 75px 75px;
     grid-template-columns: 75px 75px 80px 75px 75px 80px 75px 75px 75px;
-    margin: 40px;
+    margin: 30px;
     background-color: black;
     outline: 5px solid black;
   }
@@ -74,6 +73,7 @@
     display: grid;
     grid-template-columns: min-content auto;
     grid-template-rows: auto auto;
+    margin-top: 40px;
   }
 
   .select  {
@@ -98,4 +98,14 @@
 
   .blackText {
     color: black;
+  }
+
+  .theButtons {
+    margin-top: 10px;
+  }
+
+  .theButtons input{
+    font-size:24px;
+    outline: 3px solid black;
+    margin: 5px;
   }

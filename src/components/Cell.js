@@ -8,7 +8,7 @@ import "../index.css";
 function Cell({gridID, value, updateGrid, revealedCell, invalidCellNumber, candidates, updateCandidates, nakedSinglesToggle, hiddenSinglesToggle, hiddenSingles, isGamePaused}) {
     return (
         <>
-            {value !== 0 ? CellHasNumber(gridID, value, updateGrid, revealedCell, invalidCellNumber, isGamePaused) : CellHasCandidates(gridID, updateGrid, candidates, updateCandidates, nakedSinglesToggle, hiddenSinglesToggle, hiddenSingles, isGamePaused) }
+            {value === 0 ? CellHasCandidates(gridID, updateGrid, candidates, updateCandidates, nakedSinglesToggle, hiddenSinglesToggle, hiddenSingles, isGamePaused) : CellHasNumber(gridID, value, updateGrid, revealedCell, invalidCellNumber, isGamePaused) }
         </>
     );
 }

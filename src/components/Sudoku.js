@@ -46,7 +46,7 @@ function ComboBoxes() {
 
 function Buttons({newGame, pauseGame, solvePuzzle, isGamePaused, resetPuzzle, resetTimer, setResetTimer}) {
     return (
-        <div className='blocker'>
+        <div className='theButtons'>
             <div>
                 <input type="button" id="newGameButton" value="New Game" onClick={newGame}/>
             </div>
