@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Cell from "./Cell.js"
 import "../index.css";
 
-function Grid({grid, setGrid, starterGrid, candidates, updateCandidates, nakedSinglesToggle, hiddenSinglesToggle, hiddenSingles, isGamePaused}) {
+function Grid({grid, setGrid, starterGrid, candidates, updateCandidates, nakedSinglesToggle, hiddenSinglesToggle, hiddenSingles, isGamePaused, puzzleCompleted, setIsPuzzleSolvable}) {
     const [invalidCellNumbers, setInvalidCellNumbers] = useState([Array(81).fill(false)]);
 
     function updateGrid(gridID, value) {
@@ -75,11 +75,9 @@ function Grid({grid, setGrid, starterGrid, candidates, updateCandidates, nakedSi
         }
 
         // Subgrid check
-        const subGridStartingIndexes = [0, 3, 6, 27, 30, 33, 54, 57, 60]
-
         for (let subGrid = 0; subGrid < 9; subGrid++) {
             count = {};
-            const subGridStartingIndex = subGridStartingIndexes[subGrid];
+            const subGridStartingIndex = Math.floor(subGrid / 3) * 27 + ((subGrid % 3) * 3);
 
             for (let column = subGridStartingIndex; column < 3 + subGridStartingIndex; column++) {
                 for (let row = 0; row < 20; row+=9) {
@@ -104,8 +102,14 @@ function Grid({grid, setGrid, starterGrid, candidates, updateCandidates, nakedSi
 
         updateInvalidCellNumbers(invalidCells);
 
+        if (invalidCells.length > 0) {
+            setIsPuzzleSolvable(false);
+        } else {
+            setIsPuzzleSolvable(true);
+        }
+
         if (checkForWinningGrid(invalidCells)) {
-            console.log('winner');
+            puzzleCompleted();
         }
     }, [grid]);
 

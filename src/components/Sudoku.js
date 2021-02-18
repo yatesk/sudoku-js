@@ -1,73 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 import Grid from "./Grid.js"
-import Timer from "./Timer.js"
-import SolvePuzzle from "./SolvePuzzle.js"
+
+import CheckBoxes from "./CheckBoxes.js"
+import ComboBoxes from "./ComboBoxes.js"
+import Buttons from "./Buttons.js"
 import "../index.css";
-
-function CheckBoxes({showCandidatesToggle, setShowCandidatesToggle, hiddenSinglesToggle, setHiddenSinglesToggle, nakedSinglesToggle, setNakedSinglesToggle}) {
-    return (
-        <div>
-            <label>
-                <input type="checkbox" checked={hiddenSinglesToggle} onChange={() => {setHiddenSinglesToggle(!hiddenSinglesToggle)}} />
-                Show Hidden Singles
-            </label>
-            <label>
-                <input type="checkbox" checked={nakedSinglesToggle} onChange={() => {setNakedSinglesToggle(!nakedSinglesToggle)}} />
-                Show Naked Singles
-            </label>
-            <label>
-                <input type="checkbox" onChange={() => {setShowCandidatesToggle(!showCandidatesToggle)}} />
-                Show Candidates
-            </label>
-        </div>
-    );
-}
-
-function ComboBoxes() {
-    return (
-        <div className='gridDisplay select'>
-            <label htmlFor="puzzleSource">Puzzle Source:</label>
-            <select id="puzzleSource" name="puzzleSource">
-                <option value="nyTimes">NY Times</option>
-                <option value="qqWing">QQ Wing</option>
-                <option value="random">Random</option>
-                <option value="other">Other</option>
-            </select>
-        
-            <label htmlFor="puzzleDifficulty">Puzzle Difficulty:</label>
-            <select id="puzzleDifficulty" name="puzzleDifficulty">
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-            </select>
-        </div>
-    );
-}
-
-function Buttons({newGame, pauseGame, isGamePaused, resetPuzzle, resetTimer, setResetTimer, grid, setGrid, findSubGrid}) {
-    return (
-        <div className='theButtons'>
-            <div>
-                <input type="button" id="newGameButton" value="New Game" onClick={newGame}/>
-            </div>
-            <div>
-                <input type="button" id="pauseGameButton" value="Pause Game" onClick={pauseGame}/>
-            </div>
-            
-            <div>
-                <Timer isGamePaused={isGamePaused} resetTimer={resetTimer} setResetTimer={setResetTimer}/>
-            </div>
-            
-            <div>
-                <input type="button" id="resetPuzzleButton" value="Reset Puzzle" onClick={resetPuzzle}/>
-            </div>
-            <div>
-                <SolvePuzzle grid={grid} setGrid={setGrid} findSubGrid={findSubGrid}/>
-            </div>
-        </div>
-    );
-}
 
 function Sudoku() {
     const [gameId, setGameId] = useState(1);
@@ -78,9 +16,9 @@ function Sudoku() {
     const [nakedSinglesToggle, setNakedSinglesToggle] = useState(false);
     const [showCandidatesToggle, setShowCandidatesToggle] = useState(false);
 
-
-
     const [isGamePaused, setIsGamePaused] = useState(false);
+    const [isPuzzleCompleted, setIsPuzzleCompleted] = useState(false);
+    const [isPuzzleSolvable, setIsPuzzleSolvable] = useState(true);
 
     const starterGrid2 = [0, 0, 5, 0, 6, 0, 3, 2, 0,
                          0, 0, 0, 3, 0, 0, 0, 0, 4,
@@ -112,6 +50,9 @@ function Sudoku() {
         setCandidates(Array(81).fill([]));
         setHiddenSingles(Array(81).fill([]));
         setResetTimer(true);
+
+        setIsGamePaused(false);
+        setIsPuzzleCompleted(false);
     }
 
     function pauseGame() {
@@ -244,10 +185,9 @@ function Sudoku() {
         }
 
         // Find all numbers in each subgrid
-        const subGridStartingIndexes = [0, 3, 6, 27, 30, 33, 54, 57, 60]
         let subGridNumbers = [];
         for (let subGrid = 0; subGrid < 9; subGrid++) {
-            const subGridStartingIndex = subGridStartingIndexes[subGrid];
+            const subGridStartingIndex = Math.floor(subGrid / 3) * 27 + ((subGrid % 3) * 3);
             let oneSubGrid = []
 
             for (let column = subGridStartingIndex; column < 3 + subGridStartingIndex; column++) {
@@ -319,10 +259,10 @@ function Sudoku() {
         }
     }
 
-
-
-   
-
+    function puzzleCompleted() {
+        setIsPuzzleCompleted(true);
+        console.log('winner');
+    }
 
     useEffect(() => {
         if (hiddenSinglesToggle === true) {
@@ -353,7 +293,9 @@ function Sudoku() {
                       nakedSinglesToggle={nakedSinglesToggle} 
                       hiddenSinglesToggle={hiddenSinglesToggle} 
                       hiddenSingles={hiddenSingles}
-                      isGamePaused={isGamePaused}/>
+                      isGamePaused={isGamePaused}
+                      puzzleCompleted={puzzleCompleted}
+                      setIsPuzzleSolvable={setIsPuzzleSolvable}/>
                 <div>
                     <ComboBoxes />
                     <Buttons newGame={newGame} 
@@ -364,7 +306,9 @@ function Sudoku() {
                             setResetTimer={setResetTimer}
                             grid={grid}
                             setGrid={setGrid}
-                            findSubGrid={findSubGrid} />
+                            findSubGrid={findSubGrid}
+                            isPuzzleCompleted={isPuzzleCompleted}
+                            isPuzzleSolvable={isPuzzleSolvable} />
                 </div>
                 <CheckBoxes showCandidatesToggle={showCandidatesToggle} 
                             setShowCandidatesToggle={setShowCandidatesToggle}

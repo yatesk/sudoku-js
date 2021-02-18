@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../index.css";
 
-function Timer({isGamePaused, resetTimer, setResetTimer}) {
+function Timer({isGamePaused, isPuzzleCompleted, resetTimer, setResetTimer}) {
     const [totalSeconds, setTotalSeconds] = useState(0);
 
     function displayTime(totalSeconds) {
@@ -44,6 +44,8 @@ function Timer({isGamePaused, resetTimer, setResetTimer}) {
         // temp
         if (isGamePaused) {
             timeString += ' (PAUSED)';
+        } else if (isPuzzleCompleted) {
+            timeString += ' (Puzzle Completed!)';
         }
 
         return timeString;
@@ -59,7 +61,7 @@ function Timer({isGamePaused, resetTimer, setResetTimer}) {
 
     useEffect(() => {
         const intervalID = setTimeout(() => {
-            if(!isGamePaused) {
+            if(!isGamePaused && !isPuzzleCompleted) {
                 setTotalSeconds(totalSeconds + 1);
         }
             }, 1000);
