@@ -1,5 +1,3 @@
-import Grid, {findAnyInvalidCellNumbers} from "./Grid.js"
-
 import React, { useState, useEffect } from "react";
 
 function SolvePuzzle({grid, setGrid, findSubGrid, isPuzzleSolvable}) {

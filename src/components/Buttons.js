@@ -1,11 +1,14 @@
 import Timer from "./Timer.js"
 import SolvePuzzle from "./SolvePuzzle.js"
 
-function Buttons({newPuzzle, pauseGame, isGamePaused, resetPuzzle, resetTimer, setResetTimer, grid, setGrid, findSubGrid, isPuzzleCompleted, isPuzzleSolvable}) {
+function Buttons({newPuzzle, savePuzzle, pauseGame, isGamePaused, resetPuzzle, resetTimer, setResetTimer, grid, setGrid, findSubGrid, isPuzzleCompleted, isPuzzleSolvable}) {
     return (
         <div className='theButtons'>
             <div>
                 <input type="button" id="newPuzzleButton" value="New Puzzle" onClick={newPuzzle}/>
+            </div>
+            <div>
+                <input type="button" id="savePuzzleButton" value="Save Puzzle" onClick={savePuzzle}/>
             </div>
             <div>
                 <input type="button" id="pauseGameButton" value="Pause Game" onClick={pauseGame}/>

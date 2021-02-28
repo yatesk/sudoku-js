@@ -44,28 +44,15 @@ function Sudoku() {
     const [puzzleDifficulty, setPuzzleDifficulty] = useState('easy');
 
     const [revealedGrid, setRevealedGrid] = useState(starterGrid);
-
-
-
     const [grid, setGrid] = useState(revealedGrid);
+
     const [candidates, setCandidates] = useState(Array(81).fill([]));
     
     const [hiddenSingles, setHiddenSingles] = useState(Array(81).fill([]));
 
-    function resetPuzzle() {
-        setGrid(revealedGrid);
-        setCandidates(Array(81).fill([]));
-        setHiddenSingles(Array(81).fill([]));
+    function newPuzzle() {
+        createNewPuzzle();
         setResetTimer(true);
-
-        setIsGamePaused(false);
-        setIsPuzzleCompleted(false);
-    }
-
-    function pauseGame() {
-        setIsGamePaused(!isGamePaused);
-
-        console.log(`https://sugoku.herokuapp.com/board?difficulty=${puzzleDifficulty}`);
     }
 
     function createNewPuzzle() {
@@ -77,18 +64,16 @@ function Sudoku() {
             .then(function (html) {
                 let newPuzzle = JSON.stringify(html);
     
-                let final = [];
+                let tempGrid = [];
     
                 for (let index = 0; index < newPuzzle.length; index++) {
-                  var c = newPuzzle[index]
-                  if (c >= '0' && c <= '9') {
-                      final.push(parseInt(c));
-                  }
+                    var c = newPuzzle[index]
+                    if (c >= '0' && c <= '9') {
+                        tempGrid.push(parseInt(c));
+                    }
                 }
-                setRevealedGrid(final);
-                setGrid(final);
-    
-                //return final;
+                setRevealedGrid(tempGrid);
+                setGrid(tempGrid);
             })
             .catch(function (err) {
                 // "Not Found"
@@ -97,9 +82,23 @@ function Sudoku() {
         }
     }
 
-    function newPuzzle() {
-        createNewPuzzle();
+    function savePuzzle() {
+        localStorage.setItem('savedGrid',  JSON.stringify(grid));
+        localStorage.setItem('savedRevealedGrid',JSON.stringify(revealedGrid));
+    }
+
+    function pauseGame() {
+        setIsGamePaused(!isGamePaused);
+    }
+
+    function resetPuzzle() {
+        setGrid(revealedGrid);
+        setCandidates(Array(81).fill([]));
+        setHiddenSingles(Array(81).fill([]));
         setResetTimer(true);
+
+        setIsGamePaused(false);
+        setIsPuzzleCompleted(false);
     }
  
     function updateCandidates(cell, candidate) {
@@ -288,7 +287,29 @@ function Sudoku() {
     function puzzleCompleted() {
         setIsPuzzleCompleted(true);
         console.log('winner');
+
+        // Remove localStorage on puzzle completion?
+        // localStorage.removeItem('savedGrid');
+        // localStorage.removeItem('savedRevealedGrid');
     }
+
+    useEffect(() => {
+        const savedGrid = localStorage.getItem('savedGrid');
+
+        if (savedGrid !== null) {
+            setGrid(JSON.parse(savedGrid));
+        } else {
+            setGrid(starterGrid);
+        }
+
+        const savedRevealedGrid = localStorage.getItem('savedRevealedGrid');
+
+        if (savedRevealedGrid !== null) {
+            setRevealedGrid(JSON.parse(savedRevealedGrid));
+        } else {
+            setRevealedGrid(starterGrid);
+        }
+      }, []);
 
     useEffect(() => {
         if (hiddenSinglesToggle === true) {
@@ -326,6 +347,7 @@ function Sudoku() {
                     <ComboBoxes setPuzzleSource={setPuzzleSource}
                                 setPuzzleDifficulty={setPuzzleDifficulty}/>
                     <Buttons newPuzzle={newPuzzle} 
+                            savePuzzle={savePuzzle}
                             pauseGame={pauseGame} 
                             isGamePaused={isGamePaused} 
                             resetPuzzle={resetPuzzle} 
