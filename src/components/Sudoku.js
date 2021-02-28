@@ -8,6 +8,26 @@ import Buttons from "./Buttons.js"
 import "../index.css";
 
 function Sudoku() {
+    let starterGrid = [0, 0, 5, 0, 6, 0, 3, 2, 0,
+        0, 0, 0, 3, 0, 0, 0, 0, 4,
+        0, 0, 0, 9, 0, 7, 0, 0, 0,
+        3, 0, 2, 8, 0, 0, 0, 0, 7,
+        0, 0, 7, 0, 0, 0, 4, 0, 5,
+        0, 9, 0, 0, 0, 1, 0, 0, 8,
+        0, 0, 3, 0, 0, 0, 0, 6, 0,
+        0, 0, 0, 0, 7, 0, 0, 0, 0,
+        8, 6, 0, 0, 2, 0, 0, 0, 0];
+
+    const starterGrid2 = [0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0];
+
     const [gameId, setGameId] = useState(1);
 
     const [resetTimer, setResetTimer] = useState(false);
@@ -20,33 +40,20 @@ function Sudoku() {
     const [isPuzzleCompleted, setIsPuzzleCompleted] = useState(false);
     const [isPuzzleSolvable, setIsPuzzleSolvable] = useState(true);
 
-    const starterGrid2 = [0, 0, 5, 0, 6, 0, 3, 2, 0,
-                         0, 0, 0, 3, 0, 0, 0, 0, 4,
-                         0, 0, 0, 9, 0, 7, 0, 0, 0,
-                         3, 0, 2, 8, 0, 0, 0, 0, 7,
-                         0, 0, 7, 0, 0, 0, 4, 0, 5,
-                         0, 9, 0, 0, 0, 1, 0, 0, 8,
-                         0, 0, 3, 0, 0, 0, 0, 6, 0,
-                         0, 0, 0, 0, 7, 0, 0, 0, 0,
-                         8, 6, 0, 0, 2, 0, 0, 0, 0];
+    const [puzzleSource, setPuzzleSource] = useState('sugoku');
+    const [puzzleDifficulty, setPuzzleDifficulty] = useState('easy');
 
-    const starterGrid = [0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const [revealedGrid, setRevealedGrid] = useState(starterGrid);
 
-    const [grid, setGrid] = useState(starterGrid);
+
+
+    const [grid, setGrid] = useState(revealedGrid);
     const [candidates, setCandidates] = useState(Array(81).fill([]));
     
     const [hiddenSingles, setHiddenSingles] = useState(Array(81).fill([]));
 
     function resetPuzzle() {
-        setGrid(starterGrid);
+        setGrid(revealedGrid);
         setCandidates(Array(81).fill([]));
         setHiddenSingles(Array(81).fill([]));
         setResetTimer(true);
@@ -57,24 +64,43 @@ function Sudoku() {
 
     function pauseGame() {
         setIsGamePaused(!isGamePaused);
+
+        console.log(`https://sugoku.herokuapp.com/board?difficulty=${puzzleDifficulty}`);
     }
 
-    // broken
-    function newGame() {
-        fetch('https://cors-anywhere.herokuapp.com/https://www.nytimes.com/puzzles/sudoku/medium')
+    function createNewPuzzle() {
+        if (puzzleSource === 'sugoku') {
+            fetch(`https://sugoku.herokuapp.com/board?difficulty=${puzzleDifficulty}`)
             .then(response => {
-             //   console.log(response);
                 return response.text();
             })
             .then(function (html) {
-                console.log(html);
-                return html;
+                let newPuzzle = JSON.stringify(html);
+    
+                let final = [];
+    
+                for (let index = 0; index < newPuzzle.length; index++) {
+                  var c = newPuzzle[index]
+                  if (c >= '0' && c <= '9') {
+                      final.push(parseInt(c));
+                  }
+                }
+                setRevealedGrid(final);
+                setGrid(final);
+    
+                //return final;
             })
             .catch(function (err) {
                 // "Not Found"
                 console.log(err.statusText);
             });
         }
+    }
+
+    function newPuzzle() {
+        createNewPuzzle();
+        setResetTimer(true);
+    }
  
     function updateCandidates(cell, candidate) {
         const tempCandidates = [...candidates];
@@ -287,7 +313,7 @@ function Sudoku() {
                 <Grid key={gameId}
                       grid={grid} 
                       setGrid={setGrid} 
-                      starterGrid={starterGrid} 
+                      revealedGrid={revealedGrid} 
                       candidates={candidates} 
                       updateCandidates={updateCandidates} 
                       nakedSinglesToggle={nakedSinglesToggle} 
@@ -297,8 +323,9 @@ function Sudoku() {
                       puzzleCompleted={puzzleCompleted}
                       setIsPuzzleSolvable={setIsPuzzleSolvable}/>
                 <div>
-                    <ComboBoxes />
-                    <Buttons newGame={newGame} 
+                    <ComboBoxes setPuzzleSource={setPuzzleSource}
+                                setPuzzleDifficulty={setPuzzleDifficulty}/>
+                    <Buttons newPuzzle={newPuzzle} 
                             pauseGame={pauseGame} 
                             isGamePaused={isGamePaused} 
                             resetPuzzle={resetPuzzle} 
