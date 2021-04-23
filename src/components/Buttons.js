@@ -1,6 +1,8 @@
 import Timer from "./Timer.js"
 import SolvePuzzle from "./SolvePuzzle.js"
 
+import "../styles/Grid.css";
+
 function Buttons({ newPuzzle, savePuzzle, pauseGame, isGamePaused, resetPuzzle, resetTimer, setResetTimer, grid, setGrid, findSubGrid, isPuzzleCompleted, isPuzzleSolvable }) {
 	return (
 		<div className='theButtons'>

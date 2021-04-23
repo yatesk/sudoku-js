@@ -1,3 +1,4 @@
+import "../styles/CellHasCandidates.css";
 
 function CellHasCandidates(gridID, updateGrid, candidates, updateCandidates, nakedSinglesToggle, hiddenSinglesToggle, hiddenSingles, isGamePaused) {
 

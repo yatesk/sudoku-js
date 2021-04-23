@@ -1,0 +1,16 @@
+.cell {
+  display: grid;
+  grid-template-rows: 25px 25px 25px;
+  grid-template-columns: 25px 25px 25px;
+  width: 75px;
+  height: 75px;
+  outline:1px solid black;
+}
+
+.candidateCell {
+  font-size: 18px;
+  width: 25px;
+  height: 25px;
+  background: lightgray;
+  text-align: center;
+}

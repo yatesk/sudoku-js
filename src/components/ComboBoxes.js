@@ -1,3 +1,5 @@
+import "../styles/ComboBoxes.css";
+
 function ComboBoxes({ setPuzzleSource, setPuzzleDifficulty }) {
 
 	function puzzleSourceChange(event) {

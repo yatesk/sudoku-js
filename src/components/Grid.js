@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import Cell from "./Cell.js"
-import "../index.css";
+import "../styles/Grid.css";
 
 function Grid({ grid, setGrid, revealedGrid, candidates, updateCandidates, nakedSinglesToggle, hiddenSinglesToggle, hiddenSingles, isGamePaused, puzzleCompleted, setIsPuzzleSolvable }) {
 	const [invalidCellNumbers, setInvalidCellNumbers] = useState([Array(81).fill(false)]);

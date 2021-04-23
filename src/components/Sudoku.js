@@ -336,44 +336,46 @@ function Sudoku() {
 	}, [hiddenSinglesToggle, nakedSinglesToggle, showCandidatesToggle, grid]);
 
 	return (
-		<div>
-			<h1>Sudoku</h1>
-			<div className="gridDisplay">
-				<Grid key={gameId}
-					grid={grid} 
-					setGrid={setGrid} 
-					revealedGrid={revealedGrid} 
-					candidates={candidates} 
-					updateCandidates={updateCandidates} 
-					nakedSinglesToggle={nakedSinglesToggle} 
-					hiddenSinglesToggle={hiddenSinglesToggle} 
-					hiddenSingles={hiddenSingles}
-					isGamePaused={isGamePaused}
-					puzzleCompleted={puzzleCompleted}
-					setIsPuzzleSolvable={setIsPuzzleSolvable}/>
-				<div>
-					<ComboBoxes setPuzzleSource={setPuzzleSource}
-											setPuzzleDifficulty={setPuzzleDifficulty}/>
-					<Buttons newPuzzle={newPuzzle} 
-									savePuzzle={savePuzzle}
-									pauseGame={pauseGame} 
-									isGamePaused={isGamePaused} 
-									resetPuzzle={resetPuzzle} 
-									resetTimer={resetTimer}
-									setResetTimer={setResetTimer}
-									grid={grid}
-									setGrid={setGrid}
-									findSubGrid={findSubGrid}
-									isPuzzleCompleted={isPuzzleCompleted}
-									isPuzzleSolvable={isPuzzleSolvable} />
-				</div>
-				<CheckBoxes showCandidatesToggle={showCandidatesToggle} 
-										setShowCandidatesToggle={setShowCandidatesToggle}
-										hiddenSinglesToggle={hiddenSinglesToggle}
-										setHiddenSinglesToggle={setHiddenSinglesToggle}
-										nakedSinglesToggle={nakedSinglesToggle}
-										setNakedSinglesToggle={setNakedSinglesToggle} />
-			</div>
+		<div className="container">
+      <div className="content">
+        <h1 className="title">Sudoku</h1>
+        <div className="gridDisplay">
+          <Grid key={gameId}
+            grid={grid} 
+            setGrid={setGrid} 
+            revealedGrid={revealedGrid} 
+            candidates={candidates} 
+            updateCandidates={updateCandidates} 
+            nakedSinglesToggle={nakedSinglesToggle} 
+            hiddenSinglesToggle={hiddenSinglesToggle} 
+            hiddenSingles={hiddenSingles}
+            isGamePaused={isGamePaused}
+            puzzleCompleted={puzzleCompleted}
+            setIsPuzzleSolvable={setIsPuzzleSolvable}/>
+        </div>
+      </div>
+      <div className="side-bar">
+        <ComboBoxes setPuzzleSource={setPuzzleSource}
+                    setPuzzleDifficulty={setPuzzleDifficulty}/>
+        <Buttons newPuzzle={newPuzzle} 
+                savePuzzle={savePuzzle}
+                pauseGame={pauseGame} 
+                isGamePaused={isGamePaused} 
+                resetPuzzle={resetPuzzle} 
+                resetTimer={resetTimer}
+                setResetTimer={setResetTimer}
+                grid={grid}
+                setGrid={setGrid}
+                findSubGrid={findSubGrid}
+                isPuzzleCompleted={isPuzzleCompleted}
+                isPuzzleSolvable={isPuzzleSolvable} />
+      </div>
+      <CheckBoxes showCandidatesToggle={showCandidatesToggle} 
+                  setShowCandidatesToggle={setShowCandidatesToggle}
+                  hiddenSinglesToggle={hiddenSinglesToggle}
+                  setHiddenSinglesToggle={setHiddenSinglesToggle}
+                  nakedSinglesToggle={nakedSinglesToggle}
+                  setNakedSinglesToggle={setNakedSinglesToggle} />
 		</div>
 	);
 }

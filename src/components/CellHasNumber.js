@@ -1,4 +1,4 @@
-
+import "../styles/CellHasNumber.css";
 
 function CellHasNumber(gridID, value, updateGrid, revealedCell, invalidCellNumber, isGamePaused) {
   function onContextMenu(e) {
