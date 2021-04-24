@@ -1,6 +1,8 @@
+import "../styles/CheckBoxes.css";
+
 function CheckBoxes({ showCandidatesToggle, setShowCandidatesToggle, hiddenSinglesToggle, setHiddenSinglesToggle, nakedSinglesToggle, setNakedSinglesToggle }) {
 	return (
-		<div>
+		<div className="checkbox-container">
       <label>
 				<input type="checkbox" onChange={() => {setShowCandidatesToggle(!showCandidatesToggle)}} />
 				Show Candidates

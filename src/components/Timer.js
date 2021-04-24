@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "../index.css";
+
+import "../styles/Timer.css";
 
 function Timer({ isGamePaused, isPuzzleCompleted, resetTimer, setResetTimer }) {
 	const [totalSeconds, setTotalSeconds] = useState(0);
@@ -70,9 +71,9 @@ function Timer({ isGamePaused, isPuzzleCompleted, resetTimer, setResetTimer }) {
 	});
 
 	return (
-		<>
+		<div className="theTimer">
 			{displayTime(totalSeconds)}
-		</>
+		</div>
 	);
 }
 

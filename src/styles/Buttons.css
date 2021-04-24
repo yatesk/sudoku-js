@@ -1,0 +1,12 @@
+.theButtons input{
+  font-size:24px;
+  outline: 3px solid black;
+  margin: 10px 0;
+  display: block;
+
+  width: 160px;
+}
+
+#newPuzzleButton {
+  margin-bottom: 75px;
+}

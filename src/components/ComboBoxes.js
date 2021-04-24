@@ -11,18 +11,21 @@ function ComboBoxes({ setPuzzleSource, setPuzzleDifficulty }) {
 	}
 
 	return (
-		<div className="gridDisplay select">
-			<label htmlFor="puzzleSource">Puzzle Source:</label>
-			<select id="puzzleSource" onChange={puzzleSourceChange} name="puzzleSource">
-				<option value="sugoku">Sugoku</option>
-			</select>
-	
-			<label htmlFor="puzzleDifficulty">Puzzle Difficulty:</label>
-			<select id="puzzleDifficulty" onChange={puzzleDifficultyChange} name="puzzleDifficulty">
-				<option value="easy">Easy</option>
-				<option value="medium">Medium</option>
-				<option value="hard">Hard</option>
-			</select>
+		<div className="combo-container">
+      <div className="label-comboBox">
+        <label htmlFor="puzzleSource">Puzzle Source:</label>
+        <select id="puzzleSource" onChange={puzzleSourceChange} name="puzzleSource">
+          <option value="sugoku">Sugoku</option>
+        </select>
+      </div>
+      <div className="label-comboBox">
+        <label htmlFor="puzzleDifficulty">Puzzle Difficulty:</label>
+        <select id="puzzleDifficulty" onChange={puzzleDifficultyChange} name="puzzleDifficulty">
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
 		</div>
 	);
 }

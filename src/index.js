@@ -9,9 +9,7 @@ var destination = document.getElementById("container");
 
 function App() {
     return (
-        <div>
-            <Sudoku/>
-        </div>
+      <Sudoku/>
     );
 }
 

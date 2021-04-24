@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import Timer from "./Timer.js"
 import Grid from "./Grid.js"
-
 import CheckBoxes from "./CheckBoxes.js"
 import ComboBoxes from "./ComboBoxes.js"
 import Buttons from "./Buttons.js"
@@ -337,22 +337,28 @@ function Sudoku() {
 
 	return (
 		<div className="container">
-      <div className="content">
+      <div className="header">
         <h1 className="title">Sudoku</h1>
-        <div className="gridDisplay">
-          <Grid key={gameId}
-            grid={grid} 
-            setGrid={setGrid} 
-            revealedGrid={revealedGrid} 
-            candidates={candidates} 
-            updateCandidates={updateCandidates} 
-            nakedSinglesToggle={nakedSinglesToggle} 
-            hiddenSinglesToggle={hiddenSinglesToggle} 
-            hiddenSingles={hiddenSingles}
-            isGamePaused={isGamePaused}
-            puzzleCompleted={puzzleCompleted}
-            setIsPuzzleSolvable={setIsPuzzleSolvable}/>
-        </div>
+        <Timer  isGamePaused={isGamePaused} 
+                isPuzzleCompleted={isPuzzleCompleted} 
+                resetTimer={resetTimer} 
+                setResetTimer={setResetTimer}/>
+        <button id="pauseGameButton" onClick={pauseGame}>Pause Game</button>        
+        {/* <input type="button" id="pauseGameButton" value="Pause Game" onClick={pauseGame}/> */}
+      </div>
+      <div className="gridDisplay">
+        <Grid key={gameId}
+          grid={grid} 
+          setGrid={setGrid} 
+          revealedGrid={revealedGrid} 
+          candidates={candidates} 
+          updateCandidates={updateCandidates} 
+          nakedSinglesToggle={nakedSinglesToggle} 
+          hiddenSinglesToggle={hiddenSinglesToggle} 
+          hiddenSingles={hiddenSingles}
+          isGamePaused={isGamePaused}
+          puzzleCompleted={puzzleCompleted}
+          setIsPuzzleSolvable={setIsPuzzleSolvable}/>
       </div>
       <div className="side-bar">
         <ComboBoxes setPuzzleSource={setPuzzleSource}
@@ -362,20 +368,22 @@ function Sudoku() {
                 pauseGame={pauseGame} 
                 isGamePaused={isGamePaused} 
                 resetPuzzle={resetPuzzle} 
-                resetTimer={resetTimer}
-                setResetTimer={setResetTimer}
+                // resetTimer={resetTimer}
+                // setResetTimer={setResetTimer}
                 grid={grid}
                 setGrid={setGrid}
                 findSubGrid={findSubGrid}
                 isPuzzleCompleted={isPuzzleCompleted}
                 isPuzzleSolvable={isPuzzleSolvable} />
       </div>
-      <CheckBoxes showCandidatesToggle={showCandidatesToggle} 
-                  setShowCandidatesToggle={setShowCandidatesToggle}
-                  hiddenSinglesToggle={hiddenSinglesToggle}
-                  setHiddenSinglesToggle={setHiddenSinglesToggle}
-                  nakedSinglesToggle={nakedSinglesToggle}
-                  setNakedSinglesToggle={setNakedSinglesToggle} />
+      <div className="footer">
+        <CheckBoxes showCandidatesToggle={showCandidatesToggle} 
+                    setShowCandidatesToggle={setShowCandidatesToggle}
+                    hiddenSinglesToggle={hiddenSinglesToggle}
+                    setHiddenSinglesToggle={setHiddenSinglesToggle}
+                    nakedSinglesToggle={nakedSinglesToggle}
+                    setNakedSinglesToggle={setNakedSinglesToggle} />
+      </div>
 		</div>
 	);
 }
