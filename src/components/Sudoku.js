@@ -336,55 +336,59 @@ function Sudoku() {
 	}, [hiddenSinglesToggle, nakedSinglesToggle, showCandidatesToggle, grid]);
 
 	return (
-		<div className="container">
-      <div className="header">
-        <h1 className="title">Sudoku</h1>
-        <Timer  isGamePaused={isGamePaused} 
-                isPuzzleCompleted={isPuzzleCompleted} 
-                resetTimer={resetTimer} 
-                setResetTimer={setResetTimer}/>
-        <button id="pauseGameButton" onClick={pauseGame}>Pause Game</button>        
-        {/* <input type="button" id="pauseGameButton" value="Pause Game" onClick={pauseGame}/> */}
+    <div className="main">
+      <div className="container">
+        <div className="header">
+          <h1 className="title">Sudoku</h1>
+          <Timer  isGamePaused={isGamePaused} 
+                  isPuzzleCompleted={isPuzzleCompleted} 
+                  resetTimer={resetTimer} 
+                  setResetTimer={setResetTimer}/>
+          <button id="pauseGameButton" onClick={pauseGame}>Pause Game</button>        
+          {/* <input type="button" id="pauseGameButton" value="Pause Game" onClick={pauseGame}/> */}
+          <div className="gridDisplay">
+          <Grid key={gameId}
+            grid={grid} 
+            setGrid={setGrid} 
+            revealedGrid={revealedGrid} 
+            candidates={candidates} 
+            updateCandidates={updateCandidates} 
+            nakedSinglesToggle={nakedSinglesToggle} 
+            hiddenSinglesToggle={hiddenSinglesToggle} 
+            hiddenSingles={hiddenSingles}
+            isGamePaused={isGamePaused}
+            puzzleCompleted={puzzleCompleted}
+            setIsPuzzleSolvable={setIsPuzzleSolvable}/>
+          </div>
+          <div className="footer">
+          <CheckBoxes showCandidatesToggle={showCandidatesToggle} 
+                      setShowCandidatesToggle={setShowCandidatesToggle}
+                      hiddenSinglesToggle={hiddenSinglesToggle}
+                      setHiddenSinglesToggle={setHiddenSinglesToggle}
+                      nakedSinglesToggle={nakedSinglesToggle}
+                      setNakedSinglesToggle={setNakedSinglesToggle} />
+          </div>
+        </div>
+        
+        <div className="side-bar">
+          <ComboBoxes setPuzzleSource={setPuzzleSource}
+                      setPuzzleDifficulty={setPuzzleDifficulty}/>
+          <Buttons newPuzzle={newPuzzle} 
+                  savePuzzle={savePuzzle}
+                  pauseGame={pauseGame} 
+                  isGamePaused={isGamePaused} 
+                  resetPuzzle={resetPuzzle} 
+                  // resetTimer={resetTimer}
+                  // setResetTimer={setResetTimer}
+                  grid={grid}
+                  setGrid={setGrid}
+                  findSubGrid={findSubGrid}
+                  isPuzzleCompleted={isPuzzleCompleted}
+                  isPuzzleSolvable={isPuzzleSolvable} />
+        </div>
+        
       </div>
-      <div className="gridDisplay">
-        <Grid key={gameId}
-          grid={grid} 
-          setGrid={setGrid} 
-          revealedGrid={revealedGrid} 
-          candidates={candidates} 
-          updateCandidates={updateCandidates} 
-          nakedSinglesToggle={nakedSinglesToggle} 
-          hiddenSinglesToggle={hiddenSinglesToggle} 
-          hiddenSingles={hiddenSingles}
-          isGamePaused={isGamePaused}
-          puzzleCompleted={puzzleCompleted}
-          setIsPuzzleSolvable={setIsPuzzleSolvable}/>
-      </div>
-      <div className="side-bar">
-        <ComboBoxes setPuzzleSource={setPuzzleSource}
-                    setPuzzleDifficulty={setPuzzleDifficulty}/>
-        <Buttons newPuzzle={newPuzzle} 
-                savePuzzle={savePuzzle}
-                pauseGame={pauseGame} 
-                isGamePaused={isGamePaused} 
-                resetPuzzle={resetPuzzle} 
-                // resetTimer={resetTimer}
-                // setResetTimer={setResetTimer}
-                grid={grid}
-                setGrid={setGrid}
-                findSubGrid={findSubGrid}
-                isPuzzleCompleted={isPuzzleCompleted}
-                isPuzzleSolvable={isPuzzleSolvable} />
-      </div>
-      <div className="footer">
-        <CheckBoxes showCandidatesToggle={showCandidatesToggle} 
-                    setShowCandidatesToggle={setShowCandidatesToggle}
-                    hiddenSinglesToggle={hiddenSinglesToggle}
-                    setHiddenSinglesToggle={setHiddenSinglesToggle}
-                    nakedSinglesToggle={nakedSinglesToggle}
-                    setNakedSinglesToggle={setNakedSinglesToggle} />
-      </div>
-		</div>
+    </div>
 	);
 }
 
